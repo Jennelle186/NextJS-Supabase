@@ -7,14 +7,14 @@ import { useState } from "react";
 type WaterType = {
     name: string;
     price: number;
-    id: number;
+    id: string;
 };
 export default function WaterTypeEditForm({ session, water_types }: { session: Session | null; water_types: WaterType }) {
     const [message, setMessage] = useState<string>('');
     const [formData, setFormData] = useState<WaterType>({
         name: water_types.name,
         price: water_types.price,
-        id: Number(water_types.id),
+        id: water_types.id,
     });
 
     async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -41,6 +41,7 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
     return (
         <div>
             <h1>Edit page</h1>
+            {water_types.id}
             <form onSubmit={onSubmit}>
                 <label htmlFor="name">Name</label>
                 <input

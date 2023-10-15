@@ -1,3 +1,4 @@
+import DeleteWaterTypeButton from "@/components/WaterTypes/DeleteButton";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -16,17 +17,25 @@ const WaterTypes = async () => {
     const {data: water_types} = await supabase.from("water_type").select()
 
     if(!water_types){
-      return <p>No Water Types Found</p>
+      return (
+        <>
+        No Water Types Found
+        <Link href='/waterTypes/new'>
+            + New Water Types
+        </Link>
+        </>
+      )
     }
 
     return (
       <div>
         <h1>List of Water Types</h1>
         <Link href='/waterTypes/new'>
-            + New bike
+            + New Water Types
         </Link>
         {water_types?.map((water) => (
           <ul key={water.id}>
+            <li>ID: {water.id}</li>
             <li>Type of Water: {water.name}</li>
         <li>Price: {water.price}</li>
 
@@ -39,9 +48,7 @@ const WaterTypes = async () => {
           Edit  
         </Link>
 
-        <button>
-          Delete
-        </button>
+        <DeleteWaterTypeButton water_id ={water.id} water_name={water.name}/>
 
           </ul>
         ))}

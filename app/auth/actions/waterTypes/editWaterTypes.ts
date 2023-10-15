@@ -9,9 +9,11 @@ export async function editWaterType(formData: FormData) {
   try {
     const name = formData.get('name')
     const price = formData.get('price')
-    const id = Number(formData.get('id'))
+    // const id = Number(formData.get('id'))
+    const idValue = formData.get('id');
+    console.log('ID value:', idValue);
     const supabase = createServerComponentClient({ cookies })
-    await supabase.from('water_type').update({name: name, price: price}).eq('id', id)
+    await supabase.from('water_type').update({name: name, price: price}).eq('id', idValue)
     revalidatePath('/waterTypes')
     return { message: 'Success!' }
   } catch (e) {
