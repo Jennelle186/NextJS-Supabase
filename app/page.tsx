@@ -13,14 +13,10 @@ export default async function Home() {
     redirect('/login')
   }
   
-  const {data: water_types} = await supabase.from("water_type").select()
-  
   return (
-    <div className="overflow-hidden">
-      {session ? (<> <NavBar/>
-      <h1>This is the HOMEPAGE or the DASHBOARD</h1>
-      <pre>{JSON.stringify(water_types, null, 2)}</pre></>) : (<><LoginPage/></>)}
+    <main className="overflow-hidden">
+      {session ? (<> <h1 className="text-center underline">This is the HOMEPAGE or the DASHBOARD</h1> </>) : (<><LoginPage/></>)}
      
-    </div>
+    </main>
   )
 }

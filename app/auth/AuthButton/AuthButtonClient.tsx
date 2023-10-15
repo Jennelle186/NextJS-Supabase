@@ -20,11 +20,17 @@ export default function AuthButtonClient({ session } : {session: Session | null}
 
 
   return session ? ( 
-    <button type="button" onClick={handleSignOut} >
+    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="button" onClick={handleSignOut} >
       Sign Out
     </button>
   ) : (
-    <Link href="/login">Login</Link>
+    <Link href="/login">
+      
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="button" onClick={handleSignOut} >
+        Login
+    </button>
+    
+    </Link>
   )
   
 }

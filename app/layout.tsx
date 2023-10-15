@@ -1,3 +1,6 @@
+import { NavBar } from '@/components';
+import './globals.css';
+
 import AuthProvider from "@/components/Auth/Authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
@@ -23,6 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
+      <NavBar session={session}/>
       <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
       </body>
     </html>
