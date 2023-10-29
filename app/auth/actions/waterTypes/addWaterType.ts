@@ -5,11 +5,13 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
 
 export async function addWaterType(formData: FormData) {
+  const supabase = createServerComponentClient({ cookies })
+  const {data: {user}} = await supabase.auth.getUser();
   try {
     const name = formData.get('name')
     const price = formData.get('price')
-    const supabase = createServerComponentClient({ cookies })
-    await supabase.from('water_type').insert({name, price}).select()
+    const user_id = user?.id
+    await supabase.from('water_type').insert  ({name, price, user_id}).select()
     revalidatePath('/waterTypes')
     return { message: 'Success!' }
   } catch (e) {

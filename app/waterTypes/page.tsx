@@ -8,13 +8,15 @@ export const revalidate = 0;
 
 const WaterTypes = async () => {
     const supabase = createServerComponentClient({ cookies });
-    const {data: {session }} = await supabase.auth.getSession();
+    const {data: {session}} = await supabase.auth.getSession();
+    const {data: {user}} = await supabase.auth.getUser();
 
     if(!session){
       redirect('/login')
     }
 
-    const {data: water_types} = await supabase.from("water_type").select()
+    const {data: water_types} = await supabase.from("water_type").select().eq('user_id', user?.id)
+    console.log(user?.id, "user id on the list of waters")
 
     if(!water_types){
       return (

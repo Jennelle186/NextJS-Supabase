@@ -9,11 +9,11 @@ const NavBar = async ({ session} : {session: any}) => {
             {session ? <> 
                 <nav>This is the navbar available in all authenticated pages</nav>
                 <button>
+                <Link href="/">Home</Link>
                 <Link href="/waterTypes">Water Products</Link>
                 </button>
             </>: <>You must login first</>}
-           
-
+        
             {/* Button for Login and Logout */}
             <AuthButtonServer/> 
 

@@ -1,9 +1,12 @@
 import { NavBar } from '@/components';
 import './globals.css';
+import {Inter} from 'next/font/google';
 
 import AuthProvider from "@/components/Auth/Authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
+
+export const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Water Refilling Station',
@@ -25,7 +28,7 @@ export default async function RootLayout({
   const accessToken = session?.access_token || null;
   return (
     <html lang="en">
-      <body>
+      <body className={`${inter.className} antialiased`}>
       <NavBar session={session}/>
       <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
       </body>

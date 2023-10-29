@@ -11,11 +11,9 @@ export default async function Home() {
   if(!session){
     redirect('/login')
   }
-  
+
   return (
     <main className="overflow-hidden">
-      {session ? (<> <h1 className="text-center underline">This is the HOMEPAGE or the DASHBOARD</h1> </>) : (<><LoginPage/></>)}
-     
-    </main>
+      {session ? (<> <h1 className="text-center underline">This is the HOMEPAGE or the DASHBOARD</h1> </>) : (<><LoginPage/></>)}    </main>
   )
 }

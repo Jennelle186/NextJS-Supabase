@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import GoogleSignIn from "../auth/AuthButton/AuthButtonGoogle";
 
 export default async function LoginPage() {
   const supabase  = createServerComponentClient({ cookies})
@@ -21,7 +22,9 @@ export default async function LoginPage() {
       <button>Sign In</button>
     </form>
 
-    <Link href="/reset-password">Reset Password</Link>
+      <GoogleSignIn/>
+      <br/>
+      <Link href="/reset-password">Reset Password</Link>
     </>
   )
 }
