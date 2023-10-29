@@ -11,6 +11,7 @@ const NavBar = async ({ session} : {session: any}) => {
                 <button>
                 <Link href="/">Home</Link>
                 <Link href="/waterTypes">Water Products</Link>
+                <Link href="/water_station">Water Station Profile</Link>
                 </button>
             </>: <>You must login first</>}
         
