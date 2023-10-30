@@ -5,12 +5,12 @@ import WaterStationProfileForm from "./waterStationProfileForm";
 
 export default async function AddWaterStationInfo() {
   const supabase = createServerComponentClient({cookies})
+  const { data: { user } } = await supabase.auth.getUser();
 
   const {data: {session }} = await supabase.auth.getSession();
 
   if(!session){
     redirect('/login')
   }
-
   return <WaterStationProfileForm/>
 }

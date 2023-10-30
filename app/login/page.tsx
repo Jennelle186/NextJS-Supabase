@@ -14,6 +14,7 @@ export default async function LoginPage() {
 
   return (
     <>
+      <Link href="/">Click me to view all of the water refilling stations</Link>
       <form action="/auth/login" method="post">
       <label htmlFor="email">Email</label>
       <input name="email" />
