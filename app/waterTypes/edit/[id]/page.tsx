@@ -15,7 +15,7 @@ const EditWaterTypes = async ({searchParams: water_types} : {searchParams: {
   if(!session){
     redirect('/login')
   }
-  return <WaterTypeEditForm session={session} water_types={water_types}/>
+  return <WaterTypeEditForm session={session} water_types={{ ...water_types, id: String(water_types.id)}}/>
 }
  
 export default EditWaterTypes;
