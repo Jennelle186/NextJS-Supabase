@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { addWaterType } from "@/app/auth/actions/waterTypes/addWaterType";
+import MyInput from '@/components/Reusables/MyInput';
 
 export default function AddWaterForm() {
   const [message, setMessage] = useState<string>('');
@@ -18,15 +19,20 @@ export default function AddWaterForm() {
 
   return (
     <form onSubmit={onSubmit}>
-      <label htmlFor="name">Name</label>
-      <input
+      <MyInput
+        id="name"
+        label="Water Type Name"
+        required
         type="text"
         name="name"
         value={formData.name}
+        errors={`Invaliid.`}
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
       />
-      <label htmlFor="price">Price</label>
-      <input
+      <MyInput
+        id="prce"
+        label="Price"
+        errors={`Invalid`}
         type="text"
         name="price"
         value={formData.price}

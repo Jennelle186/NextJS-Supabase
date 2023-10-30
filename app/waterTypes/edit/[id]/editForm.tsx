@@ -1,6 +1,7 @@
 'use client'
 
 import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
+import MyInput from "@/components/Reusables/MyInput";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 
@@ -43,18 +44,22 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
             <h1>Edit page</h1>
             {water_types.id}
             <form onSubmit={onSubmit}>
-                <label htmlFor="name">Name</label>
-                <input
+                <MyInput
+                    id="name"
+                    label="Water Type Name"
                     type="text"
                     name="name"
+                    errors={`Invalid`}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
-                <label htmlFor="price">Price</label>
-                <input
-                    type="number" // Use type "number" for numeric input
-                    name="price"
-                    value={formData.price}
+                <MyInput
+                     id="prce"
+                     label="Price"
+                     errors={`Invalid`}
+                     type="text"
+                     name="price"
+                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
                 />
                 <button type="submit">Submit</button>
