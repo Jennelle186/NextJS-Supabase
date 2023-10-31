@@ -50,7 +50,7 @@ const WaterTypes = async () => {
           Edit  
         </Link>
 
-        <DeleteWaterTypeButton water_id ={water.id} water_name={water.name}/>
+          <DeleteWaterTypeButton water_id ={water.id} water_name={water.name}/>
 
           </ul>
         ))}
