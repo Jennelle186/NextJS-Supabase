@@ -1,5 +1,7 @@
-import NavBar from "./navbar";
+import NavBar from "./Header/navBarLinkServer";
+
 
 export {
     NavBar,
+
 }

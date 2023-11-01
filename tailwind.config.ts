@@ -13,13 +13,13 @@ const config: Config = {
       lg: '976px',
       xl: '1440px',
     }, 
-    colors: {
-      'blue': '#1fb6ff',     // Represents clean water
-      'green': '#13ce66',    // Represents freshness and nature
-      'gray-dark': '#273444', // Neutral color for balance
-      'gray': '#8492a6',      // Lighter gray for a clean look
-      'gray-light': '#d3dce6', // Very light gray for a sense of purity
-    },
+    // colors: {
+    //   'blue': '#1fb6ff',     // Represents clean water
+    //   'green': '#13ce66',    // Represents freshness and nature
+    //   'gray-dark': '#273444', // Neutral color for balance
+    //   'gray': '#8492a6',      // Lighter gray for a clean look
+    //   'gray-light': '#d3dce6', // Very light gray for a sense of purity
+    // },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],

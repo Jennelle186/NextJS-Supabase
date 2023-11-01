@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import GoogleSignIn from "../auth/AuthButton/AuthButtonGoogle";
 
 export default async function LoginPage() {
-  const supabase  = createServerComponentClient({ cookies})
-  const {data : {session}} = await supabase.auth.getSession();
+  // const supabase  = createServerComponentClient({ cookies})
+  // const {data : {session}} = await supabase.auth.getSession();
 
-  if(session) {
-    redirect('/')
-  }
+  // if(session) {
+  //   redirect('/')
+  // }
 
   return (
     <>
