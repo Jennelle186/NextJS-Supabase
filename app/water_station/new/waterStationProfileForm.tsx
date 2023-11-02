@@ -1,8 +1,11 @@
 'use client'
 import addWaterStation from "@/app/auth/actions/WaterStation/addWaterStation";
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import MyInput from "@/components/Reusables/MyInput";
 import { useFormState, useFormStatus } from "react-dom";
+import DropdownList from "@/components/Reusables/MyDropDownList";
+import { barangay } from "./barangay";
+import Link from "next/link";
 
 
 interface FormData {
@@ -34,6 +37,12 @@ function SubmitButton() {
 
 export default function WaterStationProfileForm() {
   const [state, formAction] = useFormState(addWaterStation, initialState)
+  const [selectedBarangay, setSelectedBarangay] = useState<string>(''); // for the barangay selection
+
+  const handleBarangaySelection = (value: string) => {
+    setSelectedBarangay(value); //get the selected barangay
+  }
+
   const [formValue, setFormValue] = useState<FormData>({
     name: "",
     buildingNumber: "",
@@ -46,6 +55,17 @@ export default function WaterStationProfileForm() {
     tel_no: null,
     remarks: null,
   });
+ 
+
+  useEffect(() => {
+    setFormValue(prevFormValue => ({
+      ...prevFormValue,
+      barangay: selectedBarangay
+    }))
+  },[selectedBarangay])
+
+  console.log(formValue, "form value")
+
 
   return (
     <div className="container mx-auto p-4">
@@ -53,6 +73,10 @@ export default function WaterStationProfileForm() {
       <p aria-live="polite"  role="status">
         {state?.message}
       </p>
+
+      <Link href="/water_station">
+        Go back
+      </Link>
 
     <form action={formAction}>
     <MyInput
@@ -95,16 +119,18 @@ export default function WaterStationProfileForm() {
         type="text"
         errors={state.errors}
       />
-      <MyInput
-        id="barangay"
-        label="Barangay"
-        name="barangay"
-        value={formValue.barangay}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+
+      <DropdownList
+        options={barangay}
+        value={formValue.barangay} 
+        selected={selectedBarangay} 
+        onSelect={handleBarangaySelection}
         required={true}
-        type="text"
-        errors={state.errors}
+        placeholder="Please select a Barangay"
+        title="Barangay"
       />
+      <input type="hidden" name="barangay" value={selectedBarangay} /> 
+      
       <MyInput
         id="landmark"
         label="Landmark"

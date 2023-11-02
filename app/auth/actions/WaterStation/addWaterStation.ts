@@ -8,7 +8,6 @@ import { cookies } from "next/headers"
 export default async function addWaterStation(prevState: any, formData: FormData): Promise<{ message: string }> {    const supabase =createServerComponentClient({cookies})
     const {data: {user}} = await supabase.auth.getUser();
     const formDataAddress = `${formData.get('buildingNumber')}, ${formData.get('street')}, ${formData.get('zone')}`
-    console.log(formData, "formData")
 
     try{
         const station_name = formData.get('name')

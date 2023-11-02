@@ -1,29 +1,8 @@
 import Link from "next/link"
 
-// export default function NotFound(){
-//     return (
-//         <div>
-//             <h1>Not found</h1>
-//             <p>Sorry, this page does not exist </p>
-//             <Link href="/">
-//             <button>Go back to the homepage</button>
-//             </Link>
-          
-//         </div>
-//     )
-// }
-
 export default function NotFound() {
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full">
-          <body class="h-full">
-          ```
-        */}
         <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
           <div className="text-center">
             <p className="text-base font-semibold text-indigo-600">404</p>
