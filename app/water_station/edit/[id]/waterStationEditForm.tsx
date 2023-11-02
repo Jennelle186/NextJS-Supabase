@@ -1,65 +1,168 @@
 'use client'
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import UpdateWaterStation from "@/app/auth/actions/WaterStation/updateWaterStation";
+import { fetchWaterStation, initialState } from "@/app/lib/data";
+import { WaterStationType } from "@/app/lib/definitions";
+import DropdownList from "@/components/Reusables/MyDropDownList";
+import MyInput from "@/components/Reusables/MyInput";
+import SubmitButton from "@/components/Reusables/SubmitButton";
 import { useCallback, useEffect, useState } from "react";
-
-type WaterStationType  = {
-    id: string;
-    station_name: string;
-    address: string;
-    barangay: string;
-    remarks: string | null;
-    contact_no: number | null;
-    tel_no: number | null;
-    delivery_mode: string;
-    landmark: string | null;
-    user_id: string;
-    created_at: string;
-  };
+import { useFormState } from "react-dom";
+import { barangay } from "../../new/barangay";
+import Link from "next/link";
 
 const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
-  const supabase = createClientComponentClient()
-  const [loading, setLoading] = useState(true)
-  const [station, setStation] = useState<WaterStationType[] | null>(null);
+  // const supabase = createClientComponentClient()
+  const [state, formAction] = useFormState(UpdateWaterStation, initialState)
+  const [formValue, setFormValue] = useState<WaterStationType>({
+    id: "",
+    station_name: "",
+    address: "",
+    barangay: "",
+    remarks: null,
+    contact_no: null,
+    tel_no: null,
+    delivery_mode: "",
+    landmark: "",
+    user_id: "",  
+    created_at: "",
+  });
 
-//   const {data: station} = await supabase.from("water_refilling_station").select().eq('id', id)
+  const [selectedBarangay, setSelectedBarangay] = useState<string>(''); // for the barangay selection
 
+  const handleBarangaySelection = (value: string) => {
+    setSelectedBarangay(value); //get the selected barangay
+  }
 
-  const getProfile = useCallback(async () => {
+  const getWaterStation = useCallback(async () => {
     try {
-      setLoading(true)
-
-      const { data, error, status } = await supabase
-        .from('water_refilling_station')
-        .select()
-        .eq('id', id)
-
-      if (error && status !== 406) {
-        throw error
-      }
-
-      if (data) {
-        setStation(data)
-      }
+      const water_station = await fetchWaterStation(id)
+      setFormValue(water_station);
     } catch (error) {
-      alert('Error loading user data!')
-    } finally {
-      setLoading(false)
-    }
-  }, [supabase])
+      console.error('Database error', error);  
+    } 
+  }, [id]);
 
   useEffect(() => {
-    getProfile()
-  },[getProfile])
+    // getProfile(),
+    getWaterStation()
+  },[getWaterStation])
 
+  useEffect(() => {
+    setFormValue(prevFormValue => ({
+      ...prevFormValue,
+      barangay: selectedBarangay
+    }))
+  },[selectedBarangay])
+
+  console.log(state, "state")
+
+  
   return (
-    <div>
-      {loading ? 'Loading...' : 'Not loading anymore'}
-        {station?.map((station) => (
-            <ul key={station.id}>
-                <li>{station.station_name}</li>
-                <li>{station.address + " " + station.barangay}</li>
-            </ul>
-        ))}
+    <div className="container mx-auto p-4">
+      <Link href="/water_station">
+        Back
+      </Link>
+      <p aria-live="polite"  role="status">
+        {state?.message}
+      </p>
+      <form action={formAction}>
+      <input type="hidden" name="station_id" value={id} /> 
+        <MyInput
+          id="name"
+          label="Station Name"
+          name="station_name"
+          value={formValue.station_name}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required
+          type="text"
+          errors={'Invalid'}
+        />
+        <MyInput
+          id = "address"
+          name="address"
+          label="Building No, Street, Zone"
+          value={formValue.address}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required
+          type="text"
+          errors={'Invalid'}
+        />
+        <DropdownList
+          options={barangay}
+          value={formValue.barangay} 
+          selected={formValue.barangay} 
+          onSelect={handleBarangaySelection}
+          required={true}
+          placeholder="Please select a Barangay"
+          title="Barangay"
+        />
+      <input type="hidden" name="barangay" value={selectedBarangay} /> 
+      
+        <MyInput
+          id="landmark"
+          label="Landmark"
+          name="landmark"
+          value={formValue.landmark || ''}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text"
+          errors={'Invalid'}
+        />
+        <MyInput
+          id="delivery_mode"
+          label="Delivery Mode"
+          name="delivery_mode"
+          value={formValue.delivery_mode}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text"
+          errors={'Invalid'}
+        />
+        <MyInput
+          id="contact_no"
+          label="Contact Number"
+          name="contact_no"
+          value={formValue && formValue.contact_no 
+            ? formValue.contact_no.toString() 
+            : ''}
+            onChange={(event) =>
+              setFormValue({
+                ...formValue,
+                contact_no : event.target.value ? parseInt(event.target.value, 10) : null
+              })
+            }
+          type="number"
+          errors={state.errors}
+        />
+        <MyInput
+          id="tel_no"
+          label="Telephone Number"
+          name="tel_no"
+          value={formValue && formValue.tel_no
+            ? formValue.tel_no.toString() 
+            : ''}
+          onChange={(event) =>
+              setFormValue({
+                ...formValue,
+                tel_no : event.target.value ? parseInt(event.target.value, 10) : null
+              })
+            }
+          type="number"
+          errors={state.errors}
+        />
+         <MyInput
+          id="remarks"
+          label="Description or Remarks"
+          name="remarks"
+          value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          type="text"
+          errors={state.errors}
+        />
+
+        <SubmitButton />
+      </form>
+     
     </div>
   );
 }

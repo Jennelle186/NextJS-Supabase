@@ -5,35 +5,10 @@ import MyInput from "@/components/Reusables/MyInput";
 import { useFormState, useFormStatus } from "react-dom";
 import DropdownList from "@/components/Reusables/MyDropDownList";
 import { barangay } from "./barangay";
-import Link from "next/link";
+import { WaterStationFormData } from "@/app/lib/definitions";
+import { initialState } from "@/app/lib/data";
+import SubmitButton from "@/components/Reusables/SubmitButton";
 
-
-interface FormData {
-  name: string;
-  buildingNumber: string;
-  street: string;
-  zone: string;
-  landmark: string;
-  barangay: string;
-  delivery_mode: string;
-  contact_no: number | null;
-  tel_no: number | null;
-  remarks: string | null;
-}
-
-const initialState = {
-  message: null,
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button type="submit" aria-disabled={pending}>
-      Submit
-    </button>
-  )
-}
 
 export default function WaterStationProfileForm() {
   const [state, formAction] = useFormState(addWaterStation, initialState)
@@ -43,7 +18,7 @@ export default function WaterStationProfileForm() {
     setSelectedBarangay(value); //get the selected barangay
   }
 
-  const [formValue, setFormValue] = useState<FormData>({
+  const [formValue, setFormValue] = useState<WaterStationFormData>({
     name: "",
     buildingNumber: "",
     street: "",
@@ -73,10 +48,6 @@ export default function WaterStationProfileForm() {
       <p aria-live="polite"  role="status">
         {state?.message}
       </p>
-
-      <Link href="/water_station">
-        Go back
-      </Link>
 
     <form action={formAction}>
     <MyInput
