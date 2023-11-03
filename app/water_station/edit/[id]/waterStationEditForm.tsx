@@ -11,7 +11,7 @@ import { barangay } from "../../new/barangay";
 import Link from "next/link";
 
 
-const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
+const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
   // const supabase = createClientComponentClient()
   const [error, setError] = useState<Error | undefined>(undefined);
   const [state, formAction] = useFormState(UpdateWaterStation, initialState)
@@ -37,12 +37,20 @@ const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
 
   const getWaterStation = useCallback(async () => {
     try {
-      const water_station = await fetchWaterStation(id)
+      // null or empty check before the fetch call
+      if(!id) {
+        throw new Error("Id cannot be null or empty.");
+      }
+      const water_station = await fetchWaterStation(id);
       setFormValue(water_station);
     } catch (error: Error | unknown) {
-      console.error('Database error', error);  
+      console.error('getWaterStation error:', error);
+      // generic error when caught error is not an instance of Error
+      if (!(error instanceof Error)) {
+        error = new Error('An error occurred while getting the water station.');
+      }
       setError(error as Error)
-    } 
+    }
   }, [id]);
 
   useEffect(() => {

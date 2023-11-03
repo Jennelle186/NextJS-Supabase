@@ -21,8 +21,11 @@ export async function fetchUser() {
 }
 
 
-//fetch water station by id
 export async function fetchWaterStation(id: string){
+    // null or empty check before the fetch call
+    if(!id) {
+      throw new Error("Id cannot be null or empty.");
+    }
     try{
         const {data, error, status} = await supabase
             .from('water_refilling_station')
@@ -35,11 +38,12 @@ export async function fetchWaterStation(id: string){
         const water_station = data?.map((station) => ({
             ...station
         }))
-      
+        
         return water_station?.[0]
     }catch(error){
-        console.error('Database error', error);
-        throw new Error('Failed to fetch water refilling station data')
+        // generic error message with specific error.
+        console.error('Failed to fetch water refilling station data: ', error);
+        throw new Error(`Failed to fetch water refilling station data - ${error}`)
     }
 }
 
@@ -48,7 +52,7 @@ export async function fetchWaterStationOfUSer(user_id: string) {
 
     try {
         console.log(user_id, "user id from the data.ts")
-      const { data, error, status } = await supabase
+        const { data, error, status } = await supabase
         .from('water_refilling_station')
         .select()
         .eq('user_id', user_id);
