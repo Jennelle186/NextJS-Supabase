@@ -4,7 +4,7 @@ import EditWaterStationInformation from './waterStationEditForm'
 import { redirect } from 'next/navigation'
 
 interface station_id {
-  params: {id: number}
+  params: {id: string}
 }
 
 export default async function EditWaterStation(props: station_id) {
