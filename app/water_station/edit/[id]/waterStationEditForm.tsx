@@ -10,8 +10,10 @@ import { useFormState } from "react-dom";
 import { barangay } from "../../new/barangay";
 import Link from "next/link";
 
+
 const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
   // const supabase = createClientComponentClient()
+  const [error, setError] = useState<Error | undefined>(undefined);
   const [state, formAction] = useFormState(UpdateWaterStation, initialState)
   const [formValue, setFormValue] = useState<WaterStationType>({
     id: "",
@@ -37,8 +39,9 @@ const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
     try {
       const water_station = await fetchWaterStation(id)
       setFormValue(water_station);
-    } catch (error) {
+    } catch (error: Error | unknown) {
       console.error('Database error', error);  
+      setError(error as Error)
     } 
   }, [id]);
 
@@ -62,6 +65,11 @@ const EditWaterStationInformation: React.FC<{ id: number }> = ({ id }) => {
       <Link href="/water_station">
         Back
       </Link>
+      {error && (
+      <p aria-live="assertive" role="status" style={{ color: 'red' }}>
+        Error: {error.message}
+      </p>
+    )}
       <p aria-live="polite"  role="status">
         {state?.message}
       </p>

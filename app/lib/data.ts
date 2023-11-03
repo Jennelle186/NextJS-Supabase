@@ -1,11 +1,12 @@
 import { createClientComponentClient, createServerComponentClient} from "@supabase/auth-helpers-nextjs";
+import { error } from "console";
 
 export const supabase = createClientComponentClient()
+
 
 export const initialState = {
     message: null,
 }
-
 //fetch water station by id
 export async function fetchWaterStation(id: number){
     try{
