@@ -1,15 +1,11 @@
 'use client'
 
 import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
+import { WaterType } from "@/app/lib/definitions";
 import MyInput from "@/components/Reusables/MyInput";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 
-type WaterType = {
-    name: string;
-    price: number;
-    id: string;
-};
 export default function WaterTypeEditForm({ session, water_types }: { session: Session | null; water_types: WaterType }) {
     const [message, setMessage] = useState<string>('');
     const [formData, setFormData] = useState<WaterType>({
