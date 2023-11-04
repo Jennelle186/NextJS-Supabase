@@ -1,11 +1,12 @@
 // app/actions/addWaterType.ts
 'use server'
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerActionClient} from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
 
 export async function addWaterType(formData: FormData) {
-  const supabase = createServerComponentClient({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerActionClient({ cookies: () => cookieStore })
   const {data: {user}} = await supabase.auth.getUser();
   try {
     const name = formData.get('name')

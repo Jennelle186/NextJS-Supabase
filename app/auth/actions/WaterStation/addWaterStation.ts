@@ -1,11 +1,13 @@
 'use server'
 
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { createServerActionClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
 
 
-export default async function addWaterStation(prevState: any, formData: FormData): Promise<{ message: string }> {    const supabase =createServerComponentClient({cookies})
+export default async function addWaterStation(prevState: any, formData: FormData): Promise<{ message: string }> {    
+    const cookieStore = cookies()
+    const supabase = createServerActionClient({ cookies: () => cookieStore })
     const {data: {user}} = await supabase.auth.getUser();
     const formDataAddress = `${formData.get('buildingNumber')}, ${formData.get('street')}, ${formData.get('zone')}`
 

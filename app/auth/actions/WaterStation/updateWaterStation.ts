@@ -1,12 +1,13 @@
 'use server'
 
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { createServerActionClient} from "@supabase/auth-helpers-nextjs"
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
 
 
 export default async function UpdateWaterStation(prevState: any, formData: FormData): Promise<{ message: string }> {    
-    const supabase =createServerComponentClient({cookies})
+    const cookieStore = cookies()
+    const supabase = createServerActionClient({ cookies: () => cookieStore })
     const {data: {user}} = await supabase.auth.getUser();
 
     try{    

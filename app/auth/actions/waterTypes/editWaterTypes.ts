@@ -1,9 +1,8 @@
 // app/actions/editWaterTypes.ts
 'use server'
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerActionClient} from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation";
 
 export async function editWaterType(formData: FormData) {
   try {
@@ -12,7 +11,8 @@ export async function editWaterType(formData: FormData) {
     // const id = Number(formData.get('id'))
     const idValue = formData.get('id');
     console.log('ID value:', idValue);
-    const supabase = createServerComponentClient({ cookies })
+    const cookieStore = cookies()
+    const supabase = createServerActionClient({ cookies: () => cookieStore })
     await supabase.from('water_type').update({name: name, price: price}).eq('id', idValue)
     revalidatePath('/waterTypes')
     return { message: 'Success!' }
