@@ -32,3 +32,14 @@ export type WaterStationType  = {
     tel_no: number | null;
     remarks: string | null;
   }
+
+  //types used when submitting the order form
+  export type orderFormData = {
+    created_at : string;
+    first_name: string;
+    last_name: string;
+    address: string;
+    contact_no: number;
+    remarks: string;
+    water_station_id: string;
+  }

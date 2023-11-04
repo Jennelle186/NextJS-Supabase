@@ -2,19 +2,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { WaterStationType } from "../lib/definitions";
 
-// Define your WaterStation interface
-interface WaterStation {
-  id: number;
-  station_name: string;
-  address: string;
-  barangay: string;
-  remarks: string | null;
-  contact_no: number | null;
-  tel_no: number | null;
-  delivery_mode: string;
-  landmark: string | null;
-}
 
 export default async function WaterStationPage() {
   const supabase = createServerComponentClient({ cookies });
@@ -29,7 +18,7 @@ export default async function WaterStationPage() {
   const response = await supabase.from("water_refilling_station").select().eq('user_id', user?.id);
   
   if (response.data) {
-    const water_station: WaterStation[] = response.data;
+    const water_station: WaterStationType[] = response.data;
     
     return (
       <div>

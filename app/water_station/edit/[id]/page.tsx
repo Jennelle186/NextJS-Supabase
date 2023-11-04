@@ -8,7 +8,8 @@ interface station_id {
 }
 
 export default async function EditWaterStation(props: station_id) {
-  const supabase = createServerComponentClient({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   const {
     data: { session },
