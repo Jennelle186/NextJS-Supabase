@@ -42,7 +42,6 @@ export default async function WaterStationPage() {
               <li>Tel No: {station?.tel_no}</li>
               <li>Delivery mode: {station.delivery_mode}</li>
               <li>Landmark: {station?.landmark}</li>
-
               <Link
                   href={{
                     pathname: `/water_station/edit/${station.id}`,
