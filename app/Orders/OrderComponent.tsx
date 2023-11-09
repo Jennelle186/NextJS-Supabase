@@ -1,145 +1,47 @@
-'use client'
-import React, { useState } from 'react';
+import { WaterStationType, WaterType } from '../lib/definitions';
 
-interface User {
-  firstName: string;
-  lastName: string;
-  contactNo: string;
-  address: string;
-  groups: {
-    selectValue: string;
-    numberValue: string;
-  }[];
-  delivery_mode: string;
+
+interface OrderComponentProps {
+  error: Error | null;
+  waterTypes: WaterType[] | null; // Replace YourWaterTypeType with the actual type
+  refillingStation: WaterStationType | null; // Replace YourRefillingStationType with the actual type
 }
 
-export default function OrderComponent() {
-  const [user, setUser] = useState<User>({
-    firstName: '',
-    lastName: '',
-    contactNo: '',
-    address: '',
-    groups: [{ selectValue: '', numberValue: '' }],
-    delivery_mode: '',
-  });
+const OrderComponent: React.FC<OrderComponentProps> = ({
+  error,
+  waterTypes,
+  refillingStation,
+}) => {
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
 
-  const handleGroupInputChange = (index: number, field: 'selectValue' | 'numberValue', value: string) => {
-    const updatedGroups = [...user.groups];
-    updatedGroups[index][field] = value;
-    setUser({ ...user, groups: updatedGroups });
-  };
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
-  const addGroupField = () => {
-    setUser({
-      ...user,
-      groups: [...user.groups, { selectValue: '', numberValue: '' }],
-    });
-  };
-
-  const removeGroupField = (index: number) => {
-    const updatedGroups = [...user.groups];
-    updatedGroups.splice(index, 1);
-    setUser({ ...user, groups: updatedGroups });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(user); // You can handle form submission here
-  };
+  if (!waterTypes || !refillingStation) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h1>User Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstName"
-            value={user.firstName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={user.lastName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Contact No:</label>
-          <input
-            type="text"
-            name="contactNo"
-            value={user.contactNo}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={user.address}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {user.groups.map((group, index) => (
-          <div key={index}>
-            <label>Group {index + 1}:</label>
-            <select
-              name={`selectValue-${index}`}
-              value={group.selectValue}
-              onChange={(e) =>
-                handleGroupInputChange(index, 'selectValue', e.target.value)
-              }
-            >
-              <option value="">Select an option</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
-            <input
-              type="number"
-              name={`numberValue-${index}`}
-              value={group.numberValue}
-              onChange={(e) =>
-                handleGroupInputChange(index, 'numberValue', e.target.value)
-              }
-            />
-            <button type="button" onClick={() => removeGroupField(index)}>
-              Remove Group
-            </button>
-          </div>
+      {/* Render other components based on the data */}
+      <h1>Station Details: </h1>
+      <strong>Station Name:</strong> {refillingStation.station_name} <br />
+      <strong>Address:</strong> {refillingStation.address + "," + refillingStation.barangay} <br />
+      <strong>Landmark:</strong> {refillingStation.landmark} <br />
+      <strong>Contact No:</strong> {refillingStation.contact_no} <br />
+      {refillingStation.tel_no && (
+        <p>Tel No: {refillingStation.tel_no}</p>
+      )}
+      <h1>Water Available:</h1>
+      {waterTypes.map((waterType) => (
+          <li key={waterType.id}>
+            <strong>Name:</strong> {waterType.name}, <strong>Price:</strong> {waterType.price}
+          </li>
         ))}
-        <button type="button" onClick={addGroupField}>
-          Add Group
-        </button>
-
-        <div>
-          <label>Delivery Mode:</label>
-          <input
-            type="text"
-            name="delivery_mode"
-            value={user.delivery_mode}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
     </div>
   );
-}
+};
+
+export default OrderComponent;
+

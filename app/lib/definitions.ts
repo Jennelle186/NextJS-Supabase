@@ -43,3 +43,20 @@ export type WaterStationType  = {
     remarks: string;
     water_station_id: string;
   }
+
+  //view where water station and water type are grouped by user_id
+  export type UserWaterStationView = {
+    user_id: string;
+    station_name: string;
+    address: string;
+    barangay: string;
+    remarks: string;
+    contact_no: number;
+    tel_no: number | null;
+    delivery_mode: string;
+    landmark: string;
+    water_type: string; //used when separate columns
+    water_type_price: number; //used when separate columns
+    // water_types_with_prices: { name: string; price: number }[]; //if JSON oject with name and price
+  };
+  
