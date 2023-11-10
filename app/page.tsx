@@ -20,8 +20,14 @@ export default async function Home() {
         : 
       (<>
       {/* Shows all of the water stations for those unauthenticated users */}
+<<<<<<< Updated upstream
       <Link href="/login">Login Here</Link>
       <ViewAllWaterStation/> 
+=======
+      <Link href="/login" className="flex w-96 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >Login Here</Link>
+      <ViewAllWaterStation data={dataView}/>
+>>>>>>> Stashed changes
       </>)}    
       </main>
   )

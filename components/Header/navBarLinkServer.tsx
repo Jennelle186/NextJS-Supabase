@@ -1,4 +1,5 @@
 import NavbarComponent from "./NavBarComponent";
+import HeaderLanding from './headerLanding'
 
 const NavBar = async ({ session} : {session: any}) => {  
     return ( 
@@ -7,7 +8,10 @@ const NavBar = async ({ session} : {session: any}) => {
 
             {session ? <> 
             <NavbarComponent/>
-            </>: <>You must login first</>}
+            
+            </>: <><HeaderLanding/>You must login first
+            
+            </>}
             {/* Button for Login and Logout */}
         </div>
      );
