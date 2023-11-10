@@ -30,7 +30,7 @@ const MyInput: React.FC<MyInputProps> = ({
 
   return (
     <div className="mb-4">
-      <label className="block text-lg font-semibold text-blue-700 mb-2">{label}</label>
+      <label className="block text-lg font-semibold text-cyan-700 mb-2">{label}</label>
       <input
          type={type} 
          id={id} 
@@ -38,6 +38,7 @@ const MyInput: React.FC<MyInputProps> = ({
          required={required} 
          value={value}
          onChange={onChange}
+         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
       {error && <p className="text-red-500 text-lg italic mt-2">{error}</p>}
     </div>

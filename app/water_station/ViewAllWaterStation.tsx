@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { UserWaterStationView, WaterStationType, WaterType } from "../lib/definitions";
 import { useState } from "react";
-
+import Submitbtn from "@/components/Reusables/SubmitButton";
 type UserWaterStationViewProps = {
   data: UserWaterStationView[]; // Assuming data is an array of WaterStationType objects
 };
@@ -34,6 +34,7 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
 
         return (
           <div key={index}>
+            <div>
             <h2><b>Water Station Name: {firstStation.station_name}</b></h2>
             <p>Address: {firstStation.address}</p>
             <p>Barangay: {firstStation.barangay}</p>
@@ -56,9 +57,12 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
                 pathname: `/Orders`,
                 query: { id: firstStation.user_id },
               }}
+              //className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
+              <Submitbtn/>
               Order
             </Link>
+            </div>
           </div>
         );
       })}
