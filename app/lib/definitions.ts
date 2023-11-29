@@ -60,3 +60,12 @@ export type WaterStationType  = {
     // water_types_with_prices: { name: string; price: number }[]; //if JSON oject with name and price
   };
   
+  //cartItemType
+  export type CartItemType = {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    user_id: string; //user_id of the water-refilling-station
+    total: number;
+  };

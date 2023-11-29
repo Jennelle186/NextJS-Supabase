@@ -55,6 +55,10 @@ export default async function addWaterStation(prevState: any, formData: FormData
                 delivery_mode,
             }).select()
         
+        if(data){
+            return {message: "Successfully added the data"}
+        }
+
         if(error){
             return {message: `${error.message}  - unable to save`}
         } 

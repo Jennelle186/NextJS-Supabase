@@ -30,11 +30,11 @@ interface OrdersProps {
       // const {data, error} = await supabase.from('water_station_view').select('*').eq('user_id', searchParams.id);
 
       const {data : view} = await supabase.from('water_station_view').select('*').eq('user_id', searchParams.id);
-      console.log(JSON.stringify(view, null, 2), "view")
+      // console.log(JSON.stringify(view, null, 2), "view")
       // console.log(error?.message,'error')
   
       const dataView = data as unknown as UserWaterStationView[];
-      console.log(JSON.stringify(data, null, 2),"dataView from the orders")
+      // console.log(JSON.stringify(data, null, 2),"dataView from the orders")
       
       if (data) {
         const water_types = data[0]?.water_type as WaterType[] | null;
