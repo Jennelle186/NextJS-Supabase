@@ -24,7 +24,9 @@ export default async function AddWaterStationInfo() {
     // No data exists, render the WaterStationProfileForm
     return (
       <div>
-        <h1>Add Water Station Information</h1>
+        <h2 className="mt-10 text-center text-2xl text-cyan-700 font-bold leading-9 tracking-tigh">
+          Add Water Station Information
+        </h2>
         <WaterStationProfileForm />
       </div>
     );
