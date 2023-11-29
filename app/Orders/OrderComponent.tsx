@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { WaterStationType, WaterType } from '../lib/definitions';
 import MyInput from '@/components/Reusables/MyInput';
 import addCustomerOrder from '../auth/actions/Orders/addOrders';
+import SubmitButton from '@/components/Reusables/SubmitButton';
 
 interface User {
   firstName: string;
@@ -28,12 +29,9 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
   waterTypes,
   refillingStation,
 }) => {
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
 
-  if (!waterTypes || !refillingStation) {
-    return <div>Loading...</div>;
+  if (error) {
+    console.error("Error:", error);
   }
 
   const [user, setUser] = useState<User>({
@@ -98,11 +96,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
-  // const [total, setTotal] = useState<number | undefined>(undefined);
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
   const total = useMemo<number>(() => {
     const calculateTotal = () => {
       return cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -111,8 +104,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     return calculateTotal();
   }, [cart])
 
-  // const [state, formAction] = useFormState(addCustomerOrder, initialState);
-  const  addOrderInfo = addCustomerOrder.bind(null, cart)
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
@@ -120,21 +111,21 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 
       {/* Render other components based on the data */}
       <h1>Station Details: </h1>
-      <strong>Station Name:</strong> {refillingStation.station_name} <br />
-      <strong>Address:</strong> {refillingStation.address + "," + refillingStation.barangay} <br />
-      <strong>Landmark:</strong> {refillingStation.landmark} <br />
-      <strong>Contact No:</strong> {refillingStation.contact_no} <br />
-      {refillingStation.tel_no && (
+      <strong>Station Name:</strong> {refillingStation?.station_name} <br />
+      <strong>Address:</strong> {refillingStation?.address + "," + refillingStation?.barangay} <br />
+      <strong>Landmark:</strong> {refillingStation?.landmark} <br />
+      <strong>Contact No:</strong> {refillingStation?.contact_no} <br />
+      {refillingStation?.tel_no && (
         <p>Tel No: {refillingStation.tel_no}</p>
       )}
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         User Form
       </div>
-      <p aria-live="polite"  role="status">
+      {/* <p aria-live="polite"  role="status">
         {error && error}
-      </p>
+      </p> */}
       <form action={(data) => addCustomerOrder(cart, total, data)}>
-        <input type="hidden" name="refilling_station_id" value={refillingStation.id}/>
+        <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
         <MyInput
           id="firstName"
           label="First Name" 
@@ -175,7 +166,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           type="text" 
           errors={'Invalid'}
         />
-        Available delivery mode: {refillingStation.delivery_mode} 
+        Available delivery mode: {refillingStation?.delivery_mode} 
         <MyInput
           id="delivery_mode"
           label="Delivery Mode" 
@@ -197,7 +188,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           errors={'Invalid'}
         />
       
-      {cart.length !== 0 ? <><button type="submit">Submit user information and orders</button></>:<>You must add waters for your orders</>}
+      {cart.length !== 0 ? <><SubmitButton/></>:<>You must add waters for your orders</>}
       
       </form>
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
@@ -206,7 +197,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     
 
       <h1>Water Available:</h1>
-      {waterTypes.map((waterType) => (
+      {waterTypes?.map((waterType) => (
        <div key={waterType.id}>
        <strong>Name:</strong> {waterType.name}, <strong>Price:</strong> {waterType.price}
        <button onClick={() => addToCart(waterType)}>Add to Cart</button>
