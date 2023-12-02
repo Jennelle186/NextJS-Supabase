@@ -20,7 +20,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders }) => {
       {orders.map((order) => (
         <div key={order.order_id}>
           <p>Order ID: {order.order_id}</p>
-          <p>Created At:{order.created_at}</p>
+         <p>Created At:{new Date(order.created_at).toDateString()}</p>
           <p>
             Customer: {order.customers.firstName} {order.customers.lastName}
           </p>

@@ -7,8 +7,6 @@ import { cookies } from "next/headers"
 export default async function addCustomerOrder(cart: any, total: number, formData: FormData): Promise<{ message: string }> {     
     const cookieStore = cookies()
     const supabase = createServerActionClient({ cookies: () => cookieStore })
-    console.log(formData, "formData")
-    console.log(cart, "prev state")
 
     try{
         const firstName = formData.get('firstName')
@@ -17,6 +15,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
         const address = formData.get('address')
         const delivery_mode = formData.get('delivery_mode')
         const remarks = formData.get('remarks')
+        const water_station_id = formData.get('water_station_id')
         const water_station_user_id = formData.get('refilling_station_user_id')
 
         //save on the customer table
@@ -26,7 +25,6 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                 lastName,
                 contact_no,
                 address,
-                delivery_mode,
             }).select()
 
             //1st option is to set the contact_no to be unique. If unique, then this will continue to add the customer.
@@ -57,25 +55,25 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
             // Check if customerId is defined before saving on the orders table
             if (customerId !== null) {
                 // Proceed with further processing
-                const water_refilling_station_id = formData.get('refilling_station_id')
                 const {data: orderData, error: orderError} = await supabase.from('orders')
                     .upsert({
                         created_at : new Date(),
                         remarks,
-                        water_station_id : water_refilling_station_id,
+                        water_station_id : water_station_id,
                         customer_id : customerId,
                         water_station_user_id,
-                        total
+                        total,
+                        delivery_mode,
                     }).select()
                 
-        
+                    console.log(orderError, "orderError")
                 
                 //retrieve order_id 
                 const order_id = orderData?.[0]?.order_id;
                 
                 //save the data on the orderItems table
                 for (const item of cart){
-                    const {id, name, price, user_id, quantity} = item
+                    const {id, quantity} = item
 
                             
                     const {data: orderItems, error: orderItemsError} = await supabase.from('order_items')
@@ -84,6 +82,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                             order_id,
                             water_type_id : id,
                         })
+                        console.log(orderItemsError, "orderItemsError")
                     
                 }
 
@@ -92,8 +91,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                 return { message: "CustomerId is not available." };
             }
 
-        // revalidatePath('/water_station')
-        return {  message: `Succesfully added the data` }
+            return {  message: `Succesfully added the data` }
     }catch(e){
         return {message: "Failed to submit the form."}
     }

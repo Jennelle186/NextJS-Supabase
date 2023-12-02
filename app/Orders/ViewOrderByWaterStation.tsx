@@ -22,6 +22,7 @@ export default async function ViewOrdersByWaterStation({}) {
           `
         )
         .eq('water_station_user_id', session?.user.id)
+        .order('created_at',{ascending: false})
       
         
     return ( 

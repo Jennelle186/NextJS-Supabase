@@ -73,7 +73,7 @@ export type WaterStationType  = {
 //to be used on the ViewOrderByWaterStations component
   export interface Order {
     order_id: string;
-    created_at: string;
+    created_at: Date;
     customers: {
       firstName: string;
       lastName: string;

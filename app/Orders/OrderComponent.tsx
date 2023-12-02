@@ -105,12 +105,49 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     return calculateTotal();
   }, [cart])
 
-  console.log(refillingStation,"refilling station")
+  const [message, setMessage] = useState<String>('');
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    // Create a FormData instance
+    const formData = new FormData();
+  
+    // Append form fields to FormData
+    formData.append('firstName', e.currentTarget.firstName.value);
+    formData.append('lastName', e.currentTarget.lastName.value);
+    formData.append('contact_no', e.currentTarget.contact_no.value);
+    formData.append('address', e.currentTarget.address.value);
+    formData.append('delivery_mode', e.currentTarget.delivery_mode.value);
+    formData.append('remarks', e.currentTarget.remarks.value);
+    formData.append('water_station_id', e.currentTarget.refilling_station_id.value )
+    formData.append('refilling_station_user_id', e.currentTarget.refilling_station_user_id.value);
+  
+
+  //form submission
+    try{
+      const res =  await addCustomerOrder(cart, total, formData);
+      setMessage(res.message)
+
+      // Reset the user state to blank values
+      setUser({
+        firstName: '',
+        lastName: '',
+        contact_no: 0,
+        address: '',
+        delivery_mode: '',
+        remarks: '',
+      });
+
+    }catch(err){
+      setMessage("Unable to save.")
+    }
+  };
+  
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
       <div className='text-2xl font-bold mt-4 mb-4'>Order Page</div>
-
+      <p>{message}</p>
       {/* Render other components based on the data */}
       <h1>Station Details: </h1>
       <strong>Station Name:</strong> {refillingStation?.station_name} <br />
@@ -123,7 +160,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         User Form
       </div>
-      <form action={(data) => addCustomerOrder(cart, total, data)}>
+      <form onSubmit={handleFormSubmit}>
         <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
         <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
         <MyInput
@@ -188,9 +225,11 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           errors={'Invalid'}
         />
       
-      {cart.length !== 0 ? <><SubmitButton pending={false}/></>:<>You must add waters for your orders</>}
-      
+      {/* cart should not be empty and readyForButtonOrder should be true, before submission button will appear */}
+      {/* {cart.length !== 0 && <SubmitButton pending={false}> Review your order </SubmitButton>} */}
+      {cart.length !== 0 ? <><SubmitButton pending={false} type="submit"/></>:<>You must add waters for your orders</>}
       </form>
+      
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         Add your order
       </div>
@@ -237,8 +276,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
                 ))}
                 <h3>Total Amount of your purchase: Php {total}</h3>
               </div>
-            )}
-            
+            )}          
           </div>
         </div>
       
@@ -247,5 +285,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 };
 
 export default OrderComponent;
+
 
 
