@@ -69,3 +69,29 @@ export type WaterStationType  = {
     user_id: string; //user_id of the water-refilling-station
     total: number;
   };
+
+//to be used on the ViewOrderByWaterStations component
+  export interface Order {
+    order_id: string;
+    created_at: string;
+    customers: {
+      firstName: string;
+      lastName: string;
+      address: string;
+    };
+    order_items: {
+      quantity: number;
+      water_type: {
+        name: string;
+      };
+    }[];
+  }
+
+
+export interface OrderListProps {
+  orders: Order[];
+}
+
+export interface HomeProps {
+  orders: Order[];
+}

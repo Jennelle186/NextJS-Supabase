@@ -17,6 +17,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
         const address = formData.get('address')
         const delivery_mode = formData.get('delivery_mode')
         const remarks = formData.get('remarks')
+        const water_station_user_id = formData.get('refilling_station_user_id')
 
         //save on the customer table
         const {data: customerData, error: customerError} = await supabase.from('customers')
@@ -57,16 +58,17 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
             if (customerId !== null) {
                 // Proceed with further processing
                 const water_refilling_station_id = formData.get('refilling_station_id')
-                console.log(water_refilling_station_id, "id of water station")
                 const {data: orderData, error: orderError} = await supabase.from('orders')
                     .upsert({
                         created_at : new Date(),
                         remarks,
                         water_station_id : water_refilling_station_id,
                         customer_id : customerId,
+                        water_station_user_id,
                         total
                     }).select()
-
+                
+        
                 
                 //retrieve order_id 
                 const order_id = orderData?.[0]?.order_id;
@@ -80,10 +82,9 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                         .upsert({   
                             quantity,
                             order_id,
-                            water_type_id : id
+                            water_type_id : id,
                         })
                     
-                    console.log(orderItemsError, "order items error")
                 }
 
             } else {

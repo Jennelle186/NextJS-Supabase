@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserWaterStationView, WaterStationType, WaterType } from "../lib/definitions";
 import { useState } from "react";
 import Submitbtn from "@/components/Reusables/SubmitButton";
+import SubmitButton from "@/components/Reusables/SubmitButton";
 type UserWaterStationViewProps = {
   data: UserWaterStationView[]; // Assuming data is an array of WaterStationType objects
 };
@@ -59,7 +60,9 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
               }}
               //className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              <Submitbtn/>
+              <SubmitButton pending={false}>
+                Order
+              </SubmitButton>
             </Link>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { WaterStationType, WaterType } from '../lib/definitions';
 import MyInput from '@/components/Reusables/MyInput';
 import addCustomerOrder from '../auth/actions/Orders/addOrders';
 import SubmitButton from '@/components/Reusables/SubmitButton';
+import { useFormState } from 'react-dom';
 
 interface User {
   firstName: string;
@@ -104,6 +105,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     return calculateTotal();
   }, [cart])
 
+  console.log(refillingStation,"refilling station")
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
@@ -121,11 +123,9 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         User Form
       </div>
-      {/* <p aria-live="polite"  role="status">
-        {error && error}
-      </p> */}
       <form action={(data) => addCustomerOrder(cart, total, data)}>
         <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
+        <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
         <MyInput
           id="firstName"
           label="First Name" 
@@ -188,7 +188,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           errors={'Invalid'}
         />
       
-      {cart.length !== 0 ? <><SubmitButton/></>:<>You must add waters for your orders</>}
+      {cart.length !== 0 ? <><SubmitButton pending={false}/></>:<>You must add waters for your orders</>}
       
       </form>
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
@@ -247,4 +247,5 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 };
 
 export default OrderComponent;
+
 
