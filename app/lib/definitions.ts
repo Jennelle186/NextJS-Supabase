@@ -95,3 +95,12 @@ export interface OrderListProps {
 export interface HomeProps {
   orders: Order[];
 }
+
+//types in ViewAllWaterStation
+export type UserWaterStationViewProps = {
+  data: UserWaterStationView[]; // Assuming data is an array of WaterStationType objects
+};
+
+export type GroupedData = {
+  [userStationKey: string]: UserWaterStationView[];
+};
