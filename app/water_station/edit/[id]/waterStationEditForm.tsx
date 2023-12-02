@@ -176,7 +176,7 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
           errors={state.errors}
         />
 
-        <SubmitButton />
+      <SubmitButton pending={false}/>
       </form>
      
     </div>
