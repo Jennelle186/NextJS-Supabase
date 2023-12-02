@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { fetchWaterStationOfUSer } from "../lib/data";
+import SubmitButton from "@/components/Reusables/SubmitButton";
 
 export const revalidate = 0;
 
@@ -64,7 +65,7 @@ const WaterTypes = async () => {
         <>
         No Water Types Found
         <Link href='/waterTypes/new'>
-            + New Water Types
+            <SubmitButton pending={false} >Add New Water Type</SubmitButton>
         </Link>
         </>
       )
@@ -74,7 +75,7 @@ const WaterTypes = async () => {
       <div>
         <h1>List of Water Types</h1>
         <Link href='/waterTypes/new'>
-            + New Water Types
+           <SubmitButton pending={false}>Add New Water Type</SubmitButton>
         </Link>
         {water_types?.map((water) => (
           <ul key={water.id}>
@@ -88,7 +89,7 @@ const WaterTypes = async () => {
             query: water // the data
           }}
         >
-          Edit  
+          <SubmitButton pending={false}>Edit </SubmitButton>
         </Link>
 
           <DeleteWaterTypeButton water_id ={water.id} water_name={water.name}/>

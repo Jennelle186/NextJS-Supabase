@@ -4,6 +4,7 @@ import supabase from "@/utils/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import SubmitButton from "../Reusables/SubmitButton";
 
 interface DeleteWaterTypeButtonProps {
   water_id: String;
@@ -68,6 +69,7 @@ const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
 
   return (
     <div>
+
       <button className="font-bold py-2 px-4 rounded" onClick={toggleOpen}>
         Delete Water Type
       </button>

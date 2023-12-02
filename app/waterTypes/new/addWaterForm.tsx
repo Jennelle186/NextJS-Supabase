@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { addWaterType } from "@/app/auth/actions/waterTypes/addWaterType";
 import MyInput from '@/components/Reusables/MyInput';
+import SubmitButton from '@/components/Reusables/SubmitButton';
 
 export default function AddWaterForm() {
   const [message, setMessage] = useState<string>('');
@@ -31,14 +32,15 @@ export default function AddWaterForm() {
       />
       <MyInput
         id="prce"
-        label="Price"
+        label="Price per Liter"
+        required
         errors={`Invalid`}
-        type="text"
+        type="number"
         name="price"
         value={formData.price}
         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
       />
-      <button type="submit">Add</button>
+      <SubmitButton pending={false}>Add Water</SubmitButton>
       <p>{message}</p>
     </form>
   );

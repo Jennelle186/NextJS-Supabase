@@ -3,6 +3,7 @@
 import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
 import { WaterType } from "@/app/lib/definitions";
 import MyInput from "@/components/Reusables/MyInput";
+import SubmitButton from "@/components/Reusables/SubmitButton";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 
@@ -51,14 +52,14 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
                 />
                 <MyInput
                      id="prce"
-                     label="Price"
+                     label="Price Per Liter"
                      errors={`Invalid`}
-                     type="text"
+                     type="number"
                      name="price"
                      value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
                 />
-                <button type="submit">Submit</button>
+              <SubmitButton pending={false}/>
             </form>
             <p>{message}</p>
         </div>
