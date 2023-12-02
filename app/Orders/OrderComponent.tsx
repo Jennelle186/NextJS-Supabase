@@ -147,7 +147,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
       <div className='text-2xl font-bold mt-4 mb-4'>Order Page</div>
-      <p>{message}</p>
+      <h1><p>{message}</p></h1>
       {/* Render other components based on the data */}
       <h1>Station Details: </h1>
       <strong>Station Name:</strong> {refillingStation?.station_name} <br />
