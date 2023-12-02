@@ -163,7 +163,7 @@ export default function WaterStationProfileForm() {
         type="text"
         errors={state.errors}
       />
-      <SubmitButton />
+      <SubmitButton pending={false}/>
     </form>
     </div>
   );
