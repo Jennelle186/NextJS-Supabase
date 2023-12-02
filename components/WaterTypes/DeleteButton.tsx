@@ -85,6 +85,7 @@ const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
         ) : (
           <p>Closed</p>
         )}
+        
       </div>
       
     </div>
