@@ -129,12 +129,14 @@ export default function WaterStationProfileForm() {
         value={formValue && formValue.contact_no 
           ? formValue.contact_no.toString() 
           : ''}
-          onChange={(event) =>
+          onChange={(event) => {
+            const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+            const limitedInput = input.slice(0, 10); // Limit to 10 digits
             setFormValue({
               ...formValue,
-              contact_no : event.target.value ? parseInt(event.target.value, 10) : null
-            })
-          }
+              contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
+            });
+          }}
         type="number"
         errors={state.errors}
       />

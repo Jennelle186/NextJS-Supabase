@@ -1,3 +1,5 @@
+// NOT BEING USED - WILL BE DELETED LATER
+
 import { createRouteHandlerClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
