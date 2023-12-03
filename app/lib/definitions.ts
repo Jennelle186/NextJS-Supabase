@@ -104,3 +104,25 @@ export type UserWaterStationViewProps = {
 export type GroupedData = {
   [userStationKey: string]: UserWaterStationView[];
 };
+
+//email templates
+// Define a type for the item in the cart
+export type CartItem = {
+  name: string;
+  quantity: number;
+  price: number;
+};
+
+// Define a type for the invoice email data
+export type InvoiceEmailData = {
+  firstName: string|null;
+  lastName: string | null;
+  address: string;
+  water_station_name: string;
+  contact_no: string;
+  delivery_mode: string
+  order_id: string;
+  cart: CartItem[];
+  total: number;
+  remarks: string | null;
+};

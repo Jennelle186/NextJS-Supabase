@@ -1,22 +1,29 @@
 'use server'
 
+import { sendMail } from "@/app/lib/mail"
 import { createServerActionClient} from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
+import generateInvoiceEmailBody from "./emailTemplate"
+import { InvoiceEmailData } from "@/app/lib/definitions"
 
 
 export default async function addCustomerOrder(cart: any, total: number, formData: FormData): Promise<{ message: string }> {     
     const cookieStore = cookies()
     const supabase = createServerActionClient({ cookies: () => cookieStore })
 
+    let order_id;
+
     try{
-        const firstName = formData.get('firstName')
-        const lastName = formData.get('lastName')
-        const contact_no = formData.get('contact_no')
-        const address = formData.get('address')
-        const delivery_mode = formData.get('delivery_mode')
-        const remarks = formData.get('remarks')
+  
+        const firstName = formData.get('firstName') as string
+        const lastName = formData.get('lastName') as string
+        const contact_no = formData.get('contact_no') as string
+        const address = formData.get('address') as string
+        const delivery_mode = formData.get('delivery_mode') as string
+        const remarks = formData.get('remarks') as string
         const water_station_id = formData.get('water_station_id')
         const water_station_user_id = formData.get('refilling_station_user_id')
+        const water_station_name = formData.get('refilling_station_name') as string
 
         //save on the customer table
         const {data: customerData, error: customerError} = await supabase.from('customers')
@@ -69,7 +76,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                     console.log(orderError, "orderError")
                 
                 //retrieve order_id 
-                const order_id = orderData?.[0]?.order_id;
+                order_id = orderData?.[0]?.order_id;
                 
                 //save the data on the orderItems table
                 for (const item of cart){
@@ -91,10 +98,54 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                 return { message: "CustomerId is not available." };
             }
 
+            console.log(water_station_name, "water station name")
+
+            //sending an email
+            try{
+
+                const emailData: InvoiceEmailData = {
+                    firstName,
+                    lastName,
+                    order_id,
+                    cart: cart,
+                    total: total,
+                    remarks,
+                    address,
+                    delivery_mode,
+                    contact_no,
+                    water_station_name
+                  };
+
+                  const res = await sendMailFunction({
+                    to: "ravenousred18@gmail.com",
+                    name: `${emailData.firstName} ${emailData.lastName}`,
+                    subject: `New Order Placed ${emailData.order_id} on ${water_station_name}`,
+                    body: generateInvoiceEmailBody(emailData),
+                  });
+
+        
+
+                console.log(res, "email sent")
+            }catch(err){
+                console.log(err, "email error")
+            }
+
+        
             return {  message: `Succesfully added the data` }
     }catch(e){
         return {message: "Failed to submit the form."}
     }
 
 }
+
+
+export async function sendMailFunction ({to, name, subject, body}: {to: string, name: string; subject: string; body: string}) {
+    await sendMail({
+        to: to,
+        name: name,
+        subject: subject,
+        body: `${body}`
+    })
+}
+
 

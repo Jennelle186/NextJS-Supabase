@@ -109,6 +109,13 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 
   const [forPrinting, setForPrint] = useState<Boolean>(false); //to show the printing button
   const [message, setMessage] = useState<String>(''); // to return a message
+    
+    //loading state for the submission
+    const [loading, setLoading] = useState<Boolean>(false);
+  
+
+
+  //form submission
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
@@ -124,8 +131,8 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     formData.append('remarks', e.currentTarget.remarks.value);
     formData.append('water_station_id', e.currentTarget.refilling_station_id.value )
     formData.append('refilling_station_user_id', e.currentTarget.refilling_station_user_id.value);
-  
-  
+    formData.append('refilling_station_name', e.currentTarget.refilling_station_name.value);
+
   //form submission
     try{
       const res =  await addCustomerOrder(cart, total, formData);
@@ -141,12 +148,18 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         remarks: '',
       });
 
+      setCart([])
+
       setForPrint(true);
+
+      setLoading(true);
 
     }catch(err){
       setMessage("Unable to save.")
     }
   };
+
+  
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
@@ -165,8 +178,10 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         User Form
       </div>
       <form onSubmit={handleFormSubmit}>
+        <input type="hidden" name="refilling_station_name" value={refillingStation?.station_name}/>
         <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
         <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
+       <h1>Will be adding an email field here and also to be added on the FormData append </h1>
         <MyInput
           id="firstName"
           label="First Name" 
@@ -231,7 +246,15 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       
       {/* cart should not be empty and readyForButtonOrder should be true, before submission button will appear */}
       {/* {cart.length !== 0 && <SubmitButton pending={false}> Review your order </SubmitButton>} */}
-      {cart.length !== 0 ? <><SubmitButton pending={false} type="submit"/></>:<>You must add waters for your orders</>}
+      {cart.length !== 0 ? (
+        <>
+          <SubmitButton pending={false} type="submit"/>
+        </>
+       
+      ) : (
+        <>You must add waters for your orders</>
+      )}
+
       </form>
     
       {forPrinting === true && 
@@ -293,7 +316,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
               </div>
             )}          
           </div>
-      
         
         </div>
       
