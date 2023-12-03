@@ -1,10 +1,12 @@
 'use client'
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { WaterStationType, WaterType } from '../lib/definitions';
 import MyInput from '@/components/Reusables/MyInput';
 import addCustomerOrder from '../auth/actions/Orders/addOrders';
 import SubmitButton from '@/components/Reusables/SubmitButton';
-import { useFormState } from 'react-dom';
+import BasicDocument from './Invoice/print';
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import dynamic from 'next/dynamic';
 
 interface User {
   firstName: string;
@@ -105,7 +107,8 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     return calculateTotal();
   }, [cart])
 
-  const [message, setMessage] = useState<String>('');
+  const [forPrinting, setForPrint] = useState<Boolean>(false); //to show the printing button
+  const [message, setMessage] = useState<String>(''); // to return a message
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
@@ -122,7 +125,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     formData.append('water_station_id', e.currentTarget.refilling_station_id.value )
     formData.append('refilling_station_user_id', e.currentTarget.refilling_station_user_id.value);
   
-
+  
   //form submission
     try{
       const res =  await addCustomerOrder(cart, total, formData);
@@ -138,11 +141,12 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         remarks: '',
       });
 
+      setForPrint(true);
+
     }catch(err){
       setMessage("Unable to save.")
     }
   };
-  
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
@@ -229,7 +233,18 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       {/* {cart.length !== 0 && <SubmitButton pending={false}> Review your order </SubmitButton>} */}
       {cart.length !== 0 ? <><SubmitButton pending={false} type="submit"/></>:<>You must add waters for your orders</>}
       </form>
-      
+    
+      {forPrinting === true && 
+      <>
+      <h1>This is your invoice. Please download it</h1>
+        <PDFDownloadLink document={<BasicDocument cart={cart} total={total} user={user}/>} fileName="my-order.pdf">
+        {({ blob, url, loading, error }) =>
+          loading ? 'Loading document...' : 'Download now!'
+        }
+      </PDFDownloadLink>
+      </>
+      }
+
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         Add your order
       </div>
@@ -278,6 +293,8 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
               </div>
             )}          
           </div>
+      
+        
         </div>
       
 
