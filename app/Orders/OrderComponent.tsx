@@ -185,7 +185,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         <input type="hidden" name="refilling_station_name" value={refillingStation?.station_name}/>
         <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
         <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
-       <h1>Will be adding an email field here and also to be added on the FormData append </h1>
         <MyInput
           id="firstName"
           label="First Name" 
