@@ -20,13 +20,6 @@ export async function sendMail({
       pass: SMTP_PASSWORD,
     },
   });
-  try {
-    const testResult = await transport.verify();
-    console.log(testResult);
-  } catch (error) {
-    console.error({ error });
-    return;
-  }
 
   await new Promise((resolve, reject) => {
     // verify connection configuration
@@ -41,17 +34,17 @@ export async function sendMail({
     });
 });
   try {
-    const sendResult = await transport.sendMail({
+
+    const mailData = {
       from: SMTP_EMAIL,
       to,
       subject,
       html: body,
-    });
-    console.log(sendResult);
+    }
 
     await new Promise((resolve, reject) => {
       // send mail
-      transport.sendMail(sendResult, (err, info) => {
+      transport.sendMail(mailData, (err, info) => {
           if (err) {
               console.error(err);
               reject(err);
