@@ -61,7 +61,7 @@ const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
       // toggleClose();
     } catch (error: any) {
       if(error.code == 'PGRST116') return 'Row not found';
-      return setMessage('An error occured while deleting the record')
+      return setMessage(error.message)
       // console.error("Error deleting record:", error);
       // setErrorMessage("An error occurred while deleting the record.");
     }

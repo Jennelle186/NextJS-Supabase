@@ -8,7 +8,7 @@ interface MyInputProps {
   errors: any;
   // onChange: (name: string, value: string | number | null) => void;
   required?: boolean;
-  type?: 'text' | 'number';
+  type?: 'text' | 'number' | 'email';
   placeholder?: string;
 }
 

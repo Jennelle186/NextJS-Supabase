@@ -15,6 +15,7 @@ interface User {
   address: string;
   delivery_mode: string;
   remarks: string;
+  email: string;
 }
 
 interface WaterTypeQty extends WaterType {
@@ -44,6 +45,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     address: '',
     delivery_mode: '',
     remarks: '',
+    email: '',
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +128,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     formData.append('firstName', e.currentTarget.firstName.value);
     formData.append('lastName', e.currentTarget.lastName.value);
     formData.append('contact_no', e.currentTarget.contact_no.value);
+    formData.append('email', e.currentTarget.email.value)
     formData.append('address', e.currentTarget.address.value);
     formData.append('delivery_mode', e.currentTarget.delivery_mode.value);
     formData.append('remarks', e.currentTarget.remarks.value);
@@ -146,6 +149,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         address: '',
         delivery_mode: '',
         remarks: '',
+        email: ''
       });
 
       setCart([])
@@ -212,6 +216,17 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           type="text" 
           errors={'Invalid'}
         /> 
+        <MyInput
+          id="email"
+          label="Email" 
+          name="email"
+          value={user.email}
+          onChange={handleInputChange}
+          required 
+          type="email" 
+          errors={'Invalid'}
+          placeholder='We will be sending you the invoice on your email so please provide an active email.'
+        /> 
          <MyInput
           id="address"
           label="Bldg No, Zone, Street, Barangay" 
@@ -239,7 +254,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           name="remarks"
           value={user.remarks}
           onChange={handleInputChange}
-          required 
           type="text" 
           errors={'Invalid'}
         />

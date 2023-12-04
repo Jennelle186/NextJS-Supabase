@@ -12,7 +12,6 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
     const supabase = createServerActionClient({ cookies: () => cookieStore })
 
     let order_id;
-
     try{
   
         const firstName = formData.get('firstName') as string
@@ -24,6 +23,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
         const water_station_id = formData.get('water_station_id')
         const water_station_user_id = formData.get('refilling_station_user_id')
         const water_station_name = formData.get('refilling_station_name') as string
+        const email = formData.get('email') as string
 
         //save on the customer table
         const {data: customerData, error: customerError} = await supabase.from('customers')
@@ -117,7 +117,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                   };
 
                   const res = await sendMailFunction({
-                    to: "ravenousred18@gmail.com",
+                    to: `${email}`,
                     name: `${emailData.firstName} ${emailData.lastName}`,
                     subject: `New Order Placed ${emailData.order_id} on ${water_station_name}`,
                     body: generateInvoiceEmailBody(emailData),
