@@ -17,7 +17,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders }) => {
   return (
     <div>
       <h1>Pending Order List</h1>
-      {orders.map((order) => (
+      {orders?.map((order) => (
         <div key={order.order_id}>
           <p>Order ID: {order.order_id}</p>
          <p>Created At:{new Date(order.created_at).toDateString()}</p>

@@ -5,18 +5,30 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 
-const navigation = [
+const authenticatedNavigationItems = [
   { name: 'Home', href: '/', },
   { name: 'Water Types', href: '/waterTypes'},
   { name: 'Water Refilling Station Information', href: 'water_station'},
-]
+];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+const notAuthenticatedNavigationItems = [
+  { name: 'Home', href: '/', },
+  {name: 'Login', href: '/login'},
+  {name: 'View all Water Stations', href: '/water-station-list'} ,
+];
 
-export default function NavbarComponent() {
-    const pathname = usePathname()
+export default function NavbarComponent({ session} : {session: any}) {
+    const pathname = usePathname();
+
+      
+  const navigationItems = session ? authenticatedNavigationItems : notAuthenticatedNavigationItems
+
+  console.log(session, "session")
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -45,7 +57,7 @@ export default function NavbarComponent() {
                 </div>
                    <div className="hidden sm:ml-6 sm:block">
                    <div className="flex space-x-4">
-                     {navigation.map((item) => (
+                     {navigationItems.map((item) => (
                        <Link
                          key={item.name}
                          href={item.href}
@@ -62,23 +74,31 @@ export default function NavbarComponent() {
                    </div>
                  </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <form action="/auth/signout" method="post">
-                  <button type="submit"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    Sign out
-                  </button>
-                </form>
-                
-               </div>
+
+
+              {session && 
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <form action="/auth/signout" method="post">
+                      <button type="submit"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        Sign out
+                      </button>
+                    </form>
+                    
+                   </div>
+              }
+
+
+              
+            
             </div>
           </div>
           
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {navigationItems.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"

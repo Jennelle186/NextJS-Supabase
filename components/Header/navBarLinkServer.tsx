@@ -5,7 +5,7 @@ const NavBar = async ({ session} : {session: any}) => {
         <div>
             {/* Links here */}
             
-            {session &&  <NavbarComponent/>}
+            <NavbarComponent session={session} />
             {/* Button for Login and Logout */}
         </div>
      );

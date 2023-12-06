@@ -1,6 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers";
-import ViewAllWaterStation from "@/app/water_station/ViewAllWaterStation";
+import ViewAllWaterStation from "@/app/water-station-list/ViewAllWaterStation";
 import Link from "next/link";
 import { UserWaterStationView } from "./lib/definitions";
 import ViewOrdersByWaterStation from "@/app/Orders/ViewOrderByWaterStation";
@@ -26,9 +26,8 @@ export default async function Home() {
 
         : 
       (<>
-      {/* Shows all of the water stations for those unauthenticated users */}
-      <Link href="/login">Login Here</Link>
-      <ViewAllWaterStation data={dataView}/>
+      {/* Show the landing page */}
+      <h1>Landing Page here</h1>
       </>)}    
       </main>
   )
