@@ -3,6 +3,9 @@ import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useRef, useState } from 'react'
+import DialogComponent from '../Reusables/Modal'
+import SubmitButton from '../Reusables/SubmitButton'
 
 
 const authenticatedNavigationItems = [
@@ -28,6 +31,19 @@ export default function NavbarComponent({ session} : {session: any}) {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }
+
+  //for the modal to work
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const cancelButtonRef = useRef(null)
+  
+  const toggleOpen = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
+
+  const toggleClose = () => {
+    setIsOpen(false);
+  };
+ 
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -74,28 +90,46 @@ export default function NavbarComponent({ session} : {session: any}) {
                    </div>
                  </div>
               </div>
-
+            
 
               {session && 
+              <>
+                <button onClick={toggleOpen}
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Logout
+                  </button>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <form action="/auth/signout" method="post">
-                      <button type="submit"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    <DialogComponent isOpen={isOpen} onClose={toggleClose}>
+                    <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">
+                      Are you sure you want to log out?
+                    </h3>
+
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <form action="/auth/signout" method="post">
+                        <button type="submit"
+                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                        >
+                          Sign out
+                        </button>
+                      </form>
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        onClick={() => setIsOpen(false)}
                       >
-                        Sign out
+                        Cancel
                       </button>
-                    </form>
-                    
+                    </div>
+                  </DialogComponent>
                    </div>
+                </>
               }
 
-
-              
+ 
             
             </div>
           </div>
           
-
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigationItems.map((item) => (
