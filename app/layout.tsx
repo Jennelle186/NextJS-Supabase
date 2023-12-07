@@ -1,10 +1,10 @@
-import { NavBar } from '@/components';
 import './globals.css';
 import {Inter} from 'next/font/google';
 
 import AuthProvider from "@/components/Auth/Authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
+import NavBar from '@/components/Header/navBarLinkServer';
 
 export const inter = Inter({ subsets: ['latin'] });
 
