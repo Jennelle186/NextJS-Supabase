@@ -1,6 +1,8 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import OrderList from "./OrderList";
+import { DataTable } from "./DataTable";
+import { columns } from "./columns";
 
 export default async function ViewOrdersByWaterStation({}) {
     const cookieStore = cookies()
@@ -13,6 +15,7 @@ export default async function ViewOrdersByWaterStation({}) {
           `
             order_id,
             created_at,
+            delivery_mode,
             customers(firstName, lastName, address),
             order_items(
               quantity,
@@ -24,13 +27,11 @@ export default async function ViewOrdersByWaterStation({}) {
         .eq('water_station_user_id', session?.user.id)
         .order('created_at',{ascending: false})
       
-        
     return ( 
         <div>
           {/* error message here */}
           {error && error.message} 
-          {/* Component for the orderList */}
-         <OrderList orders={orders} />
+         <DataTable columns={columns} data={orders}/>
         </div>
      );
 }

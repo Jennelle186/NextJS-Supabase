@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import ViewAllWaterStation from "@/app/water-station-list/ViewAllWaterStation";
 import Link from "next/link";
 import { UserWaterStationView } from "./lib/definitions";
-import ViewOrdersByWaterStation from "@/app/Orders/ViewOrderByWaterStation";
+import ViewOrdersByWaterStation from "@/app/OrdersByStation/ViewOrderByWaterStation";
 
 
 export default async function Home() {
@@ -22,7 +22,14 @@ export default async function Home() {
       
       {/* if logged in, this is what the user will be able to view */}
       {/* If logged in, water stations account do not need to see all of the list of the water stations */}
-      {session ? (<> <h1 className="text-center">Welcome to the dashboard <ViewOrdersByWaterStation/></h1> </>) 
+      {session ? (
+        <section className="my-5">
+          <div className="container">
+            <h1 className="text-3xl font-bold">All Orders</h1>
+            <ViewOrdersByWaterStation/>
+          </div>
+        </section>
+      ) 
 
         : 
       (<>

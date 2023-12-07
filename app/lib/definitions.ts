@@ -74,6 +74,7 @@ export type WaterStationType  = {
   export interface Order {
     order_id: string;
     created_at: Date;
+    delivery_mode: string;
     customers: {
       firstName: string;
       lastName: string;

@@ -26,8 +26,6 @@ export default function NavbarComponent({ session} : {session: any}) {
       
   const navigationItems = session ? authenticatedNavigationItems : notAuthenticatedNavigationItems
 
-  console.log(session, "session")
-
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
   }

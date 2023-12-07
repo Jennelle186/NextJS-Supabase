@@ -212,7 +212,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
           value={user.contact_no}
           onChange={handleInputChange}
           required 
-          type="text" 
+          type="number" 
           errors={'Invalid'}
         /> 
         <MyInput
