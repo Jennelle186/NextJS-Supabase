@@ -4,6 +4,7 @@ import { GroupedData, UserWaterStationViewProps} from "../lib/definitions";
 import { useState } from "react";
 import MyInput from "@/components/Reusables/MyInput";
 import FilteredStation from "./filteredStationList";
+import { Input } from "@/components/ui/input";
 
 
 export default function ViewAllWaterStation({ data }: UserWaterStationViewProps) {
@@ -37,15 +38,13 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
   return (
     <>
     <br/>
-     <MyInput
+     <Input
         id="searchInput"
-        label="Search Input" 
         name="name"
         value={searchInput}
         placeholder="Search by water station name, type of water, and address"
         onChange={(e) => setSearchInput(e.target.value)}
         type="text" 
-        errors={"Enter a valid search input"}
       /> 
     {/* {Object.values(groupedData).map((stations, index) -- before */}
 
