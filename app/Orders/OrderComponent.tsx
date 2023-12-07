@@ -290,7 +290,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       {waterTypes?.map((waterType) => (
        <div key={waterType.id}>
        <strong>Name:</strong> {waterType.name}, <strong>Price:</strong> {waterType.price}
-       <button onClick={() => addToCart(waterType)}>Add to Cart</button>
+       <button onClick={() => addToCart(waterType)}>Add to Cart (Per Liter) </button>
      </div>
       ))}
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
@@ -300,10 +300,10 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
             {cart.map((item) => (
               <li key={item.id}>
                 <p>{item.name} - ${item.price} </p>
-                <p>Quantity: {item.quantity}</p> 
+                <p>Liter: {item.quantity}</p> 
                 <p>Unit price: {item.quantity * item.price}</p>
-                <button onClick={() => addQuantity(item.id)}>+ Add quantity</button>
-                <button onClick={() => reduceQuantity(item.id)}>- Reduce quantity</button>
+                <button onClick={() => addQuantity(item.id)}>+ Add more Liter(s)</button>
+                <button onClick={() => reduceQuantity(item.id)}>- Reduce Liter(s)</button>
                 <br/>
                 <button onClick={() => removeFromCart(item.id)}>Remove</button>
               </li>

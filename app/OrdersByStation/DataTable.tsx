@@ -10,7 +10,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
   useReactTable,
-  getPaginationRowModel
+  getPaginationRowModel,
 } from "@tanstack/react-table"
 
 import {
@@ -55,29 +55,28 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnVisibility, setColumnVisibility] =
     useState<VisibilityState>({})
- 
+  
 
   const table = useReactTable({
     data,
     columns,
+    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
       globalFilter,
       columnVisibility,
     },
-    onGlobalFilterChange: setGlobalFilter,
+    
   })
-
-
-
+  
   return (
   <div>
     {/* Table */}
@@ -87,22 +86,23 @@ export function DataTable<TData, TValue>({
         <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <Input
-            placeholder="Search..."
-            value={globalFilter}
-            // value={(table.getColumn("order_id")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              // table.getColumn("order_id")?.setFilterValue(event.target.value)
-              setGlobalFilter(event.target.value)
-            }
-            className="max-w-sm"
-          />
+              <Input
+          placeholder="Search by Order ID, Name, Address, and Delivery Mode"
+          value={globalFilter}
+          // value={(table.getColumn("order_id")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            // table.getColumn("order_id")?.setFilterValue(event.target.value)
+            setGlobalFilter(event.target.value)
+          }
+          className="max-w-sm"
+        />
+
           </TooltipTrigger>
           <TooltipContent>
-            <p>Search by Order ID, Name, Address, and Delivery Mode</p>
+            <p>Add to library</p>
           </TooltipContent>
         </Tooltip>
-        </TooltipProvider>
+      </TooltipProvider>
       </div>
 
       <DropdownMenu>
@@ -160,11 +160,12 @@ export function DataTable<TData, TValue>({
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
+             
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
+              >               
+               {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

@@ -39,10 +39,31 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'customers.address',
     header: "Address",
-  },{
+  },
+  {
+    accessorKey: 'customers.contact_no',
+    accessorFn: (row) => row.customers,
+    cell: ({row}) => (
+      `0${row.original.customers.contact_no}`
+    ),
+    header: "Contact No",
+  },
+  {
+    accessorKey: 'customers.email',
+    header: "Email"
+  },
+  {
     accessorKey: 'delivery_mode',
     header: "Delivery Mode"
   },
+  
+  {
+    accessorKey: 'total',
+    header: "Total Order",
+    cell: ({row}) => {
+      return <div>₱{row.getValue('total')}.00</div>
+  }
+},
   {
     accessorKey: 'order_items',
     accessorFn: (row) => row.order_items,
@@ -51,8 +72,11 @@ export const columns: ColumnDef<Order>[] = [
             return <div className="text-center" key={i}>{item.water_type.name} - {item.quantity}</div>
         })
       ),
-    header: "Orders (Water Type and Qty)",
+    header: "Orders (Water Type and Qty per Liter)",
     enableHiding: true
   },
-  
+  {
+    accessorKey: 'remarks',
+    header: "Remarks"
+  }
 ]

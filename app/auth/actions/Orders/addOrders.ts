@@ -32,6 +32,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                 lastName,
                 contact_no,
                 address,
+                email
             }).select()
 
             //1st option is to set the contact_no to be unique. If unique, then this will continue to add the customer.
