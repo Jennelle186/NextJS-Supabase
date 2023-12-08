@@ -74,6 +74,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
                         water_station_user_id,
                         total,
                         delivery_mode,
+                        order_status: 'Received Order'
                     }).select()
                 
                     console.log(orderError, "orderError")

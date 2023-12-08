@@ -15,7 +15,7 @@ export async function editWaterType(formData: FormData) {
     const supabase = createServerActionClient({ cookies: () => cookieStore })
     await supabase.from('water_type').update({name: name, price: price}).eq('id', idValue)
     revalidatePath('/waterTypes')
-    return { message: 'Success!' }
+    return { message: `You have successfully edited ${name}` }
   } catch (e) {
     return { message: 'There was an error.' }
   }

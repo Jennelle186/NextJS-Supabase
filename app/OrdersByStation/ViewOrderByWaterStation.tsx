@@ -12,7 +12,7 @@ export default async function ViewOrdersByWaterStation({}) {
       const {data : orders, error} = await supabase
         .from('orders')
         .select(
-          `order_id, created_at, remarks, delivery_mode, total,
+          `order_id, created_at, remarks, delivery_mode, total, order_status,
             customers(firstName, lastName, address, contact_no, email),
             order_items(
               quantity,

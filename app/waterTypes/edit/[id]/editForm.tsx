@@ -3,12 +3,14 @@
 import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
 import { WaterType } from "@/app/lib/definitions";
 import MyInput from "@/components/Reusables/MyInput";
-import SubmitButton from "@/components/Reusables/SubmitButton";
+import { Button } from "@/components/ui/button";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 
+
 export default function WaterTypeEditForm({ session, water_types }: { session: Session | null; water_types: WaterType }) {
     const [message, setMessage] = useState<string>('');
+    const [open, setOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<WaterType>({
         name: water_types.name,
         price: water_types.price,
@@ -25,6 +27,8 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
             // const res = await editWaterType(new FormData(event.currentTarget));
             // setMessage(res.message)
             // console.log(formData, "formdata")
+
+            setOpen(true);
             
         } catch (err) {
             console.error(err, "error");
@@ -57,9 +61,9 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })} 
                 htmlFor={'Price Per Liter'} defaultValue={''}   />
-              <SubmitButton pending={false}/>
+              <Button>Submit</Button>
             </form>
-            <p>{message}</p>
+        
         </div>
     );
 }

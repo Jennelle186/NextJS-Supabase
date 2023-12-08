@@ -5,6 +5,28 @@ import { Order } from "../lib/definitions"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { updateOrderStatus, updateToCancelledOrder } from "./actions"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useEffect, useState } from "react"
+
+
 export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'order_id',
@@ -78,5 +100,57 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'remarks',
     header: "Remarks"
-  }
+  },
+  {
+    accessorKey: 'order_status',
+    header: "Status"
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const order = row.original
+
+     return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={() => updateOrderStatus(row.original.order_id)}>
+              Deliver Order
+            </DropdownMenuItem>
+            <Dialog>
+              <DialogTrigger>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  Cancel Order
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. Do not forget to call the customers
+                    as why you have cancelled their order.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button type="submit" variant="destructive" onClick={() => updateToCancelledOrder(row.original.order_id)}>Confirm</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            <DropdownMenuSeparator />
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+  },
 ]
+
+
