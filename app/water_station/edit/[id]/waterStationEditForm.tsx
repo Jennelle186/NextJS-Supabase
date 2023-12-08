@@ -10,7 +10,6 @@ import { useFormState } from "react-dom";
 import { barangay } from "../../new/barangay";
 import Link from "next/link";
 
-
 const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
   // const supabase = createClientComponentClient()
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -96,6 +95,7 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
           value={formValue.address}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
           type="text" htmlFor={"Address"} defaultValue={""}        />
+
         <DropdownList
           options={barangay}
           value={formValue.barangay} 

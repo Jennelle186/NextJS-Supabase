@@ -7,6 +7,8 @@ import SubmitButton from '@/components/Reusables/SubmitButton';
 import BasicDocument from './Invoice/print';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import dynamic from 'next/dynamic';
+import { Router } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface User {
   firstName: string;
@@ -163,7 +165,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     }
   };
 
-  
+  const router = useRouter()
 
   return (
     <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
@@ -181,77 +183,118 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
         User Form
       </div>
+      
       <form onSubmit={handleFormSubmit}>
+      <div className="justify-center space-y-12">
+        
+        {/* Hidden input fields */}
         <input type="hidden" name="refilling_station_name" value={refillingStation?.station_name}/>
         <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
         <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
-        <MyInput
-          id="firstName"
-          label="First Name"
-          value={user.firstName}
-          onChange={handleInputChange}
-          required
-          type="text" htmlFor={"First Name"} defaultValue={''}          /> 
-         <MyInput
-          id="lastName"
-          label="Last Name"
-          value={user.lastName}
-          onChange={handleInputChange}
-          required
-          type="text" htmlFor={'First Name'} defaultValue={''}        /> 
-         <MyInput
-          id="contact_no"
-          label="Contact No"
-          value={user.contact_no}
-          onChange={handleInputChange}
-          required
-          type="number" htmlFor={'First Name'} defaultValue={''}        /> 
-        <MyInput
-          id="email"
-          label="Email"
-          value={user.email}
-          onChange={handleInputChange}
-          required
-          type="email"
-          placeholder='We will be sending you the invoice on your email so please provide an active email.' 
-          htmlFor={'Email'} defaultValue={''}        /> 
-         <MyInput
-          id="address"
-          label="Bldg No, Zone, Street, Barangay"
-          value={user.address}
-          onChange={handleInputChange}
-          required
-          type="text" htmlFor={'Address'} defaultValue={''}         
-        />
-        Available delivery mode: {refillingStation?.delivery_mode} 
-        <MyInput
-          id="delivery_mode"
-          label="Delivery Mode"
-          value={user.delivery_mode}
-          onChange={handleInputChange}
-          required
-          type="text" htmlFor={'Delivery-Mode'} defaultValue={''}          
-        />
-        <MyInput
-          id="remarks"
-          label="Remarks or Instructions you would like to add"
-          value={user.remarks}
-          onChange={handleInputChange}
-          type="text" htmlFor={'Remarks'} defaultValue={''}          
-        />
-      
-      {/* cart should not be empty and readyForButtonOrder should be true, before submission button will appear */}
-      {/* {cart.length !== 0 && <SubmitButton pending={false}> Review your order </SubmitButton>} */}
-      {cart.length !== 0 ? (
-        <>
-          <SubmitButton pending={false} type="submit"/>
-        </>
-       
-      ) : (
-        <>You must add waters for your orders</>
-      )}
 
-      </form>
+    
+        <div className="border-b border-gray-900/10 pb-12">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
+          <p className="mt-1 text-sm leading-6 text-gray-600">Use an active email address and contact number so we can inform you of your orders.</p>
+
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-3">
+            <MyInput
+              id="firstName"
+              label="First Name"
+              value={user.firstName}
+              onChange={handleInputChange}
+              required
+              type="text" htmlFor={"First Name"} defaultValue={''} /> 
+            </div>
+
+            <div className="sm:col-span-3">
+            <MyInput
+                id="lastName"
+                label="Last Name"
+                value={user.lastName}
+                onChange={handleInputChange}
+                required
+                type="text" htmlFor={'First Name'} defaultValue={''}/> 
+            </div>
+
+            <div className="sm:col-span-3">
+            <MyInput
+                id="contact_no"
+                label="Contact No"
+                value={user.contact_no}
+                onChange={handleInputChange}
+                required
+                type="number" htmlFor={'First Name'} defaultValue={''}/> 
+            </div>
+
+            <div className="sm:col-span-3">
+            <MyInput
+                id="email"
+                label="Email"
+                value={user.email}
+                onChange={handleInputChange}
+                required
+                type="email"
+                placeholder='We will be sending you the invoice on your email so please provide an active email.' 
+                htmlFor={'Email'} defaultValue={''} /> 
+            </div>
+
+            <div className="col-span-full">
+              <MyInput
+                id="address"
+                label="Bldg No, Zone, Street, Barangay"
+                value={user.address}
+                onChange={handleInputChange}
+                required
+                type="text" htmlFor={'Address'} defaultValue={''} />
+            </div>
+
+            <div className="col-span-full">
+              <MyInput
+                id="delivery_mode"
+                label={`Available Delivery Mode: ${refillingStation?.delivery_mode}`}
+                value={user.delivery_mode}
+                onChange={handleInputChange}
+                required
+                placeholder='Enter the chosen delivery mode if there is any. Else, you may enter your additional instructions for deliveries or pick-up'
+                type="text" htmlFor={'Delivery-Mode'} defaultValue={''}/> 
+            </div>
+
+            <div className='col-span-full'>
+            <MyInput
+                id="remarks"
+                label="Remarks or Instructions you would like to add"
+                value={user.remarks}
+                onChange={handleInputChange}
+                type="text" htmlFor={'Remarks'} defaultValue={''} />
+            </div>
+
+              {cart.length !== 0 ? (
+                <>
+                <div className="mt-6 flex items-center justify-end gap-x-6">
+                  <button type="button" className="text-sm font-semibold leading-6 text-gray-900" onClick={() => router.back()}>
+                    Cancel  
+                  </button>
+                  <SubmitButton
+                      type="submit"
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" pending={false}                  >
+                    Save
+                  </SubmitButton>
+                </div>
+                </>
+              
+              ) : (
+                <>You must add waters for your orders</>
+              )}
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </form>
     
       {forPrinting === true && 
       <>
