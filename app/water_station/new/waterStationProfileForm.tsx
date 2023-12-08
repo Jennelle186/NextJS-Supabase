@@ -51,45 +51,35 @@ export default function WaterStationProfileForm() {
 
     <form action={formAction}>
     <MyInput
-        id="name"
-        label="Water Station Name" 
-        name="name"
-        value={formValue.name}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required 
-        type="text" 
-        errors={state.errors}
+          id="name"
+          label="Water Station Name"
+          value={formValue.name}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required
+          type="text" htmlFor={"Water-Station-Name"} defaultValue={""}    
       /> 
       <MyInput
-        id="buildingNumber"
-        label="Building Number"
-        name="buildingNumber"
-        value={formValue.buildingNumber}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required={true}
-        type="number"
-        errors={state.errors}
+          id="buildingNumber"
+          label="Building Number"
+          value={formValue.buildingNumber}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="number" htmlFor={"Building Number"} defaultValue={""}        
       />
        <MyInput
-        id="street"
-        label="Street"
-        name="street"
-        value={formValue.street}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required={true}
-        type="text"
-        errors={state.errors}
-      />
+          id="street"
+          label="Street"
+          value={formValue.street}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text" htmlFor={"Street"} defaultValue={""}      />
       <MyInput
-        id="zone"
-        label="Zone"
-        name="zone"
-        value={formValue.zone}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required={true}
-        type="text"
-        errors={state.errors}
-      />
+          id="zone"
+          label="Zone"
+          value={formValue.zone}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text" htmlFor={"Zone"} defaultValue={""}      />
 
       <DropdownList
         options={barangay}
@@ -103,32 +93,25 @@ export default function WaterStationProfileForm() {
       <input type="hidden" name="barangay" value={selectedBarangay} /> 
       
       <MyInput
-        id="landmark"
-        label="Landmark"
-        name="landmark"
-        value={formValue.landmark}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required={true}
-        type="text"
-        errors={state.errors}
-      />
+          id="landmark"
+          label="Landmark"
+          value={formValue.landmark}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text" htmlFor={"Landmark"} defaultValue={""}      />
       <MyInput
-        id="delivery_mode"
-        label="Delivery Mode"
-        name="delivery_mode"
-        value={formValue.delivery_mode}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        required={true}
-        type="text"
-        errors={state.errors}
-      />
+          id="delivery_mode"
+          label="Delivery Mode"
+          value={formValue.delivery_mode}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          required={true}
+          type="text" htmlFor={"Delivery Mode"} defaultValue={""}      />
       <MyInput
-        id="contact_no"
-        label="Contact Number"
-        name="contact_no"
-        value={formValue && formValue.contact_no 
-          ? formValue.contact_no.toString() 
-          : ''}
+          id="contact_no"
+          label="Contact Number"
+          value={formValue && formValue.contact_no
+            ? formValue.contact_no.toString()
+            : ''}
           onChange={(event) => {
             const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
             const limitedInput = input.slice(0, 10); // Limit to 10 digits
@@ -136,34 +119,26 @@ export default function WaterStationProfileForm() {
               ...formValue,
               contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
             });
-          }}
-        type="number"
-        errors={state.errors}
+          } }
+          type="number" htmlFor={"Contact-Number"} defaultValue={""}      />
+       <MyInput
+          id="tel_no"
+          label="Telephone Number"
+          value={formValue && formValue.tel_no
+            ? formValue.tel_no.toString()
+            : ''}
+          onChange={(event) => setFormValue({
+            ...formValue,
+            tel_no: event.target.value ? parseInt(event.target.value, 10) : null
+          })}
+          type="number" htmlFor={"Telephone Number"} defaultValue={""}  
       />
        <MyInput
-        id="tel_no"
-        label="Telephone Number"
-        name="tel_no"
-        value={formValue && formValue.tel_no
-          ? formValue.tel_no.toString() 
-          : ''}
-        onChange={(event) =>
-            setFormValue({
-              ...formValue,
-              tel_no : event.target.value ? parseInt(event.target.value, 10) : null
-            })
-          }
-        type="number"
-        errors={state.errors}
-      />
-       <MyInput
-        id="remarks"
-        label="Description or Remarks"
-        name="remarks"
-        value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
-        onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-        type="text"
-        errors={state.errors}
+          id="remarks"
+          label="Description or Remarks"
+          value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
+          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+          type="text" htmlFor={"Remarks"} defaultValue={""}       
       />
       <SubmitButton pending={false}/>
     </form>

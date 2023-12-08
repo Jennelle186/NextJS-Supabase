@@ -84,31 +84,24 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
       <form action={formAction}>
       <input type="hidden" name="station_id" value={id} /> 
         <MyInput
-          id="name"
+          id="station_name"
           label="Station Name"
-          name="station_name"
           value={formValue.station_name}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          required
-          type="text"
-          errors={'Invalid'}
+          type="text" htmlFor={"Station_Name"} defaultValue={""}        
         />
         <MyInput
-          id = "address"
-          name="address"
+          id="address"
           label="Building No, Street, Zone"
           value={formValue.address}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          required
-          type="text"
-          errors={'Invalid'}
-        />
+          type="text" htmlFor={"Address"} defaultValue={""}        />
         <DropdownList
           options={barangay}
           value={formValue.barangay} 
           selected={formValue.barangay} 
           onSelect={handleBarangaySelection}
-          required={true}
+          required={false}
           placeholder="Please select a Barangay"
           title="Barangay"
         />
@@ -122,67 +115,48 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
         <MyInput
           id="landmark"
           label="Landmark"
-          name="landmark"
           value={formValue.landmark || ''}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          required={true}
-          type="text"
-          errors={'Invalid'}
+          type="text" htmlFor={"Landmark"} defaultValue={""}         
         />
         <MyInput
           id="delivery_mode"
           label="Delivery Mode"
-          name="delivery_mode"
           value={formValue.delivery_mode}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          required={true}
-          type="text"
-          errors={'Invalid'}
-        />
+          type="text" htmlFor={"Delivery-Mode"} defaultValue={""}        />
         <MyInput
           id="contact_no"
           label="Contact Number"
-          name="contact_no"
-          value={formValue && formValue.contact_no 
-            ? formValue.contact_no.toString() 
+          value={formValue && formValue.contact_no
+            ? formValue.contact_no.toString()
             : ''}
-            onChange={(event) => {
-              const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
-              const limitedInput = input.slice(0, 10); // Limit to 10 digits
-              setFormValue({
-                ...formValue,
-                contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
-              });
-            }}
-          type="number"
-          errors={state.errors}
-        />
+          onChange={(event) => {
+            const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+            const limitedInput = input.slice(0, 10); // Limit to 10 digits
+            setFormValue({
+              ...formValue,
+              contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
+            });
+          } }
+          type="number" htmlFor={"Contact-No"} defaultValue={""}        />
         <MyInput
           id="tel_no"
           label="Telephone Number"
-          name="tel_no"
           value={formValue && formValue.tel_no
-            ? formValue.tel_no.toString() 
+            ? formValue.tel_no.toString()
             : ''}
-          onChange={(event) =>
-              setFormValue({
-                ...formValue,
-                tel_no : event.target.value ? parseInt(event.target.value, 10) : null
-              })
-            }
-          type="number"
-          errors={state.errors}
-        />
+          onChange={(event) => setFormValue({
+            ...formValue,
+            tel_no: event.target.value ? parseInt(event.target.value, 10) : null
+          })}
+          type="number" htmlFor={"Telephone-Number"} defaultValue={""}        />
          <MyInput
           id="remarks"
           label="Description or Remarks"
-          name="remarks"
           value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          type="text"
-          errors={state.errors}
-        />
-
+          type="text" htmlFor={"Description"} defaultValue={""}        />
       <SubmitButton pending={false}/>
       </form>
      

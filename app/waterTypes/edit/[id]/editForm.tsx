@@ -41,24 +41,22 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
             <h1>Edit page</h1>
             {water_types.id}
             <form onSubmit={onSubmit}>
+            <MyInput
+                id="name"
+                label="Water Type Name"
+                required
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                htmlFor={'Water Type Name'} defaultValue={''}   />
                 <MyInput
-                    id="name"
-                    label="Water Type Name"
-                    type="text"
-                    name="name"
-                    errors={`Invalid`}
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-                <MyInput
-                     id="prce"
-                     label="Price Per Liter"
-                     errors={`Invalid`}
-                     type="number"
-                     name="price"
-                     value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                />
+                id="price"
+                label="Price per Liter"
+                required
+                type="number"
+                value={formData.price}
+                onChange={(e) => setFormData({ ...formData, price: e.target.value })} 
+                htmlFor={'Price Per Liter'} defaultValue={''}   />
               <SubmitButton pending={false}/>
             </form>
             <p>{message}</p>

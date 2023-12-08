@@ -2,7 +2,6 @@
 
 import { GroupedData, UserWaterStationViewProps} from "../lib/definitions";
 import { useState } from "react";
-import MyInput from "@/components/Reusables/MyInput";
 import FilteredStation from "./filteredStationList";
 import { Input } from "@/components/ui/input";
 

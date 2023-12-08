@@ -187,74 +187,57 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
         <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
         <MyInput
           id="firstName"
-          label="First Name" 
-          name="firstName"
+          label="First Name"
           value={user.firstName}
           onChange={handleInputChange}
-          required 
-          type="text" 
-          errors={'Invalid'}
-        /> 
+          required
+          type="text" htmlFor={"First Name"} defaultValue={''}          /> 
          <MyInput
           id="lastName"
-          label="Last Name" 
-          name="lastName"
+          label="Last Name"
           value={user.lastName}
           onChange={handleInputChange}
-          required 
-          type="text" 
-          errors={'Invalid'}
-        /> 
+          required
+          type="text" htmlFor={'First Name'} defaultValue={''}        /> 
          <MyInput
           id="contact_no"
-          label="Contact No" 
-          name="contact_no"
+          label="Contact No"
           value={user.contact_no}
           onChange={handleInputChange}
-          required 
-          type="number" 
-          errors={'Invalid'}
-        /> 
+          required
+          type="number" htmlFor={'First Name'} defaultValue={''}        /> 
         <MyInput
           id="email"
-          label="Email" 
-          name="email"
+          label="Email"
           value={user.email}
           onChange={handleInputChange}
-          required 
-          type="email" 
-          errors={'Invalid'}
-          placeholder='We will be sending you the invoice on your email so please provide an active email.'
-        /> 
+          required
+          type="email"
+          placeholder='We will be sending you the invoice on your email so please provide an active email.' 
+          htmlFor={'Email'} defaultValue={''}        /> 
          <MyInput
           id="address"
-          label="Bldg No, Zone, Street, Barangay" 
-          name="address"
+          label="Bldg No, Zone, Street, Barangay"
           value={user.address}
           onChange={handleInputChange}
-          required 
-          type="text" 
-          errors={'Invalid'}
+          required
+          type="text" htmlFor={'Address'} defaultValue={''}         
         />
         Available delivery mode: {refillingStation?.delivery_mode} 
         <MyInput
           id="delivery_mode"
-          label="Delivery Mode" 
-          name="delivery_mode"
+          label="Delivery Mode"
           value={user.delivery_mode}
           onChange={handleInputChange}
-          required 
-          type="text" 
-          errors={'Invalid'}
+          required
+          type="text" htmlFor={'Delivery-Mode'} defaultValue={''}          
         />
         <MyInput
           id="remarks"
-          label="Remarks or Instructions you would like to add" 
-          name="remarks"
+          label="Remarks or Instructions you would like to add"
           value={user.remarks}
           onChange={handleInputChange}
-          type="text" 
-          errors={'Invalid'}
+          type="text" htmlFor={'Remarks'} defaultValue={''}          
         />
       
       {/* cart should not be empty and readyForButtonOrder should be true, before submission button will appear */}

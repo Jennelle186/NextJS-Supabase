@@ -11,6 +11,8 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
     const cookieStore = cookies()
     const supabase = createServerActionClient({ cookies: () => cookieStore })
 
+    console.log(formData, "form data")
+
     let order_id;
     try{
   

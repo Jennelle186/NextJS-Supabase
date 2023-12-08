@@ -25,21 +25,17 @@ export default function AddWaterForm() {
         label="Water Type Name"
         required
         type="text"
-        name="name"
         value={formData.name}
-        errors={`Invaliid.`}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-      />
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+        htmlFor={'Water Type Name'} defaultValue={''}      />
       <MyInput
-        id="prce"
+        id="price"
         label="Price per Liter"
         required
-        errors={`Invalid`}
         type="number"
-        name="price"
         value={formData.price}
-        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-      />
+        onChange={(e) => setFormData({ ...formData, price: e.target.value })} 
+        htmlFor={'Price Per Liter'} defaultValue={''}      />
       <SubmitButton pending={false}>Add Water</SubmitButton>
       <p>{message}</p>
     </form>
