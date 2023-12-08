@@ -9,6 +9,7 @@ import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import dynamic from 'next/dynamic';
 import { Router } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 interface User {
   firstName: string;
@@ -272,15 +273,13 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 
               {cart.length !== 0 ? (
                 <>
-                <div className="mt-6 flex items-center justify-end gap-x-6">
-                  <button type="button" className="text-sm font-semibold leading-6 text-gray-900" onClick={() => router.back()}>
+                <div className="mt-6 flex items-center justify-end gap-x-5">
+                  <Button type="button" variant="outline" onClick={() => router.back()}>
                     Cancel  
-                  </button>
-                  <SubmitButton
-                      type="submit"
-                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" pending={false}                  >
+                  </Button>
+                  <Button type="submit">
                     Save
-                  </SubmitButton>
+                  </Button>
                 </div>
                 </>
               

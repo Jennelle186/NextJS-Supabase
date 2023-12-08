@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SubmitButton from "@/components/Reusables/SubmitButton";
 import { UserWaterStationView } from "../lib/definitions";
+import { Button } from "@/components/ui/button";
 
 type UserWaterStationViewProps = {
   filteredStation: UserWaterStationView[];
@@ -37,7 +38,7 @@ const FilteredStation: React.FC<UserWaterStationViewProps> = ({ filteredStation 
             query: { id: firstStation.user_id },
           }}
         >
-          <SubmitButton pending={false}>Order</SubmitButton>
+          <Button>Order</Button>
         </Link>
       </div>
     </div>

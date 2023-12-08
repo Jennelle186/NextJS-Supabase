@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useRef, useState } from 'react'
 import DialogComponent from '../Reusables/Modal'
 import SubmitButton from '../Reusables/SubmitButton'
+import { Button } from '../ui/button'
 
 
 const authenticatedNavigationItems = [
@@ -92,31 +93,36 @@ export default function NavbarComponent({ session} : {session: any}) {
 
               {session && 
               <>
-                <button onClick={toggleOpen}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <Button onClick={toggleOpen}>
                     Logout
-                  </button>
+                  </Button>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <DialogComponent isOpen={isOpen} onClose={toggleClose}>
                     <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">
                       Are you sure you want to log out?
                     </h3>
 
-                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <form action="/auth/signout" method="post">
-                        <button type="submit"
-                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    <div className="px-4 py-3 sm:flex sm:flex-row-reverse justify-start sm:px-6 gap-4">
+                      <div>
+                      <form action="/auth/signout" method="post">
+                        <Button type="submit"
+                          variant="destructive"
                         >
                           Sign out
-                        </button>
+                        </Button>
                       </form>
-                      <button
-                        type="button"
-                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Cancel
-                      </button>
+
+                      </div>
+                      <div>
+                        <Button
+                              type="button"
+                              variant="secondary"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              Cancel
+                          </Button>
+                      </div>
+                     
                     </div>
                   </DialogComponent>
                    </div>
