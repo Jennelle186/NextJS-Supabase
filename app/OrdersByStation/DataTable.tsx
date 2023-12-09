@@ -82,24 +82,22 @@ export function DataTable<TData, TValue>({
     {/* Table */}
 
     <div className="flex items-center justify-between">
-      <div className="flex items-center py-4">
+      <div className="flex flex-row py-4">
         <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-              <Input
-          placeholder="Search by Order ID, Name, Address, and Delivery Mode"
+          <Input
+          placeholder="Search..."
           value={globalFilter}
-          // value={(table.getColumn("order_id")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            // table.getColumn("order_id")?.setFilterValue(event.target.value)
             setGlobalFilter(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full flex-1"
         />
 
           </TooltipTrigger>
           <TooltipContent>
-            <p>Add to library</p>
+            <p>Search by Order ID, Name, Address, and Delivery Mode</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
