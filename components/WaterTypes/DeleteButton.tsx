@@ -10,6 +10,8 @@ interface DeleteWaterTypeButtonProps {
   water_name: String;
 }
 
+export const dynamic = 'force-dynamic'
+
 const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
   water_id,
   water_name,

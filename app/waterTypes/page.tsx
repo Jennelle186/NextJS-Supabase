@@ -7,6 +7,7 @@ import { fetchWaterStationOfUSer } from "../lib/data";
 import SubmitButton from "@/components/Reusables/SubmitButton";
 
 export const revalidate = 0;
+export const dynamic = 'force-dynamic'
 
 const WaterTypes = async () => {
     const cookieStore = cookies()
