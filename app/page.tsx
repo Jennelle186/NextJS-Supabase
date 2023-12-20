@@ -4,6 +4,8 @@ import ViewAllWaterStation from "@/app/water-station-list/ViewAllWaterStation";
 import Link from "next/link";
 import { UserWaterStationView } from "./lib/definitions";
 import ViewOrdersByWaterStation from "@/app/OrdersByStation/ViewOrderByWaterStation";
+import LandingPage from "@/components/Pages/landingPage";
+import Footer from "@/components/Pages/footer";
 
 
 export default async function Home() {
@@ -34,7 +36,7 @@ export default async function Home() {
         : 
       (<>
       {/* Show the landing page */}
-      <h1>Landing Page here</h1>
+      <LandingPage/>
       </>)}    
       </main>
   )

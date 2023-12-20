@@ -5,6 +5,7 @@ import AuthProvider from "@/components/Auth/Authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import NavBar from '@/components/Header/navBarLinkServer';
+import Footer from '@/components/Pages/footer';
 
 export const inter = Inter({ subsets: ['latin'] });
 
@@ -34,7 +35,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
       <NavBar session={session}/>
-      <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
+      <div className= "relative isolate px-6 pt-14 lg:px-8">
+        <AuthProvider accessToken={accessToken}>{children}</AuthProvider>  
+      </div>
+      
+        <Footer/>
       </body>
     </html>
   )

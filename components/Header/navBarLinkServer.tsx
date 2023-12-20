@@ -7,6 +7,7 @@ const NavBar = async ({ session} : {session: any}) => {
             
             <NavbarComponent session={session} />
             {/* Button for Login and Logout */}
+        
         </div>
      );
 }

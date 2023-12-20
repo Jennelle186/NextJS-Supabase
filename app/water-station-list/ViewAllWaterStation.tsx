@@ -10,7 +10,7 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
   const [searchInput, setSearchInput] = useState<string>("");
   const groupedData: GroupedData = {};
 
-  data.forEach(item => {
+  data?.forEach(item => {
     const userStationKey = `${item.user_id}_${item.station_name}`;
     if (!groupedData[userStationKey]) {
       groupedData[userStationKey] = [];
@@ -23,17 +23,16 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
     stations.some(
       (station) =>
         (!searchInput ||
-          station.station_name.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.address.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.barangay.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.landmark.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.delivery_mode.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.water_type.toLowerCase().includes(searchInput.toLowerCase()) ||
-          station.water_type_price.toString().includes(searchInput)
+          station.station_name?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.address?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.barangay?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.landmark?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.delivery_mode?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.water_type?.toLowerCase().includes(searchInput.toLowerCase()) ||
+          station.water_type_price?.toString().includes(searchInput)
         )
     )
   );
-
   return (
     <>
     <br/>
@@ -47,9 +46,12 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
       /> 
     {/* {Object.values(groupedData).map((stations, index) -- before */}
 
+    
     {filteredStations.map((stations, index) => (
         <FilteredStation key={index} filteredStation={stations} />
       ))}
+
+
     </>
   );
 }

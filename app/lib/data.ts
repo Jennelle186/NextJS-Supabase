@@ -1,11 +1,11 @@
-import { createClientComponentClient, createServerComponentClient} from "@supabase/auth-helpers-nextjs";
+'use server'
 
-export const supabase = createClientComponentClient()
+import { createClientComponentClient, createServerActionClient, createServerComponentClient} from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
+const cookieStore = cookies()
+const supabase : any = createServerActionClient({ cookies: () => cookieStore })
 
-export const initialState = {
-    message: null,
-}
 
 export async function fetchUser() {
     try{
@@ -35,7 +35,7 @@ export async function fetchWaterStation(id: string){
         if(error && status !== 406){
             throw error
         }
-        const water_station = data?.map((station) => ({
+        const water_station = data?.map((station : any) => ({
             ...station
         }))
         

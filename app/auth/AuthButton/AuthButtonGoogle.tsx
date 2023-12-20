@@ -46,5 +46,5 @@ export default function GoogleSignIn() {
         }
     }
     
-    return <button onClick={handleSignInWithGoogle}>Sign In With Google</button>
+    return <button onClick={handleSignInWithGoogle} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-ful">Sign In With Google</button>
 }

@@ -1,6 +1,6 @@
 'use client'
 import UpdateWaterStation from "@/app/auth/actions/WaterStation/updateWaterStation";
-import { fetchWaterStation, initialState } from "@/app/lib/data";
+import { fetchWaterStation } from "@/app/lib/data";
 import { WaterStationType } from "@/app/lib/definitions";
 import DropdownList from "@/components/Reusables/MyDropDownList";
 import MyInput from "@/components/Reusables/MyInput";
@@ -10,6 +10,17 @@ import { useFormState } from "react-dom";
 import { barangay } from "../../new/barangay";
 import Link from "next/link";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+const initialState = {
+  message: null,
+}
 const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
   // const supabase = createClientComponentClient()
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -63,12 +74,9 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
       barangay: selectedBarangay
     }))
   },[selectedBarangay])
-
-  console.log(state, "state")
-
   
   return (
-    <div className="container mx-auto p-4">
+    <div className="border-b border-gray-900/10 pb-12">
       <Link href="/water_station">
         Back
       </Link>
@@ -80,7 +88,7 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
       <p aria-live="polite"  role="status">
         {state?.message}
       </p>
-      <form action={formAction}>
+      <form action={formAction} >
       <input type="hidden" name="station_id" value={id} /> 
         <MyInput
           id="station_name"
@@ -89,75 +97,100 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
           type="text" htmlFor={"Station_Name"} defaultValue={""}        
         />
-        <MyInput
-          id="address"
-          label="Building No, Street, Zone"
-          value={formValue.address}
-          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          type="text" htmlFor={"Address"} defaultValue={""}        />
+        <div className="grid grid-flow-col auto-cols-max md:auto-cols-min grid-cols-2 gap-4 pt-6 ">
+          <div>  
+            <MyInput
+              id="contact_no"
+              label="Contact Number"
+              value={formValue && formValue.contact_no
+                ? formValue.contact_no.toString()
+                : ''}
+              onChange={(event) => {
+                const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                const limitedInput = input.slice(0, 10); // Limit to 10 digits
+                setFormValue({
+                  ...formValue,
+                  contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
+                });
+              } }
+              type="number" htmlFor={"Contact-No"} defaultValue={""}        
+            />
+          </div>
+          <div>
+              <MyInput
+                id="tel_no"
+                label="Telephone Number"
+                value={formValue && formValue.tel_no
+                  ? formValue.tel_no.toString()
+                  : ''}
+                onChange={(event) => setFormValue({
+                  ...formValue,
+                  tel_no: event.target.value ? parseInt(event.target.value, 10) : null
+                })}
+                type="number" htmlFor={"Telephone-Number"} defaultValue={""}        
+              />
+          </div>
+        </div>
 
-        <DropdownList
-          options={barangay}
-          value={formValue.barangay} 
-          selected={formValue.barangay} 
-          onSelect={handleBarangaySelection}
-          required={false}
-          placeholder="Please select a Barangay"
-          title="Barangay"
-        />
-    
-      <input
-        type="hidden"
-        name="barangay"
-        value={formValue.barangay || selectedBarangay} 
-      />
+        <div className="grid gap-4 grid-cols-3 pt-6  md:auto-cols-min">
+          <div>
+            <MyInput
+              id="address"
+              label="Building No, Street, Zone"
+              value={formValue.address}
+              onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+              type="text" htmlFor={"Address"} defaultValue={""}        
+            />
+          </div>
+
+          <div>
+            <MyInput
+              id="landmark"
+              label="Landmark"
+              value={formValue.landmark || ''}
+              onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+              type="text" htmlFor={"Landmark"} defaultValue={""}         
+            />
+          </div>
+
+          <div className="mt-1.5">
+            <DropdownList
+                options={barangay}
+                value={formValue.barangay} 
+                selected={formValue.barangay} 
+                onSelect={handleBarangaySelection}
+                required={false}
+                placeholder="Please select a Barangay"
+                title="Barangay"
+              />
+          </div> 
+        </div>
+        
+          <input
+            type="hidden"
+            name="barangay"
+            value={formValue.barangay || selectedBarangay} 
+          />
       
-        <MyInput
-          id="landmark"
-          label="Landmark"
-          value={formValue.landmark || ''}
-          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          type="text" htmlFor={"Landmark"} defaultValue={""}         
-        />
         <MyInput
           id="delivery_mode"
           label="Delivery Mode"
           value={formValue.delivery_mode}
           onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
           type="text" htmlFor={"Delivery-Mode"} defaultValue={""}        />
-        <MyInput
-          id="contact_no"
-          label="Contact Number"
-          value={formValue && formValue.contact_no
-            ? formValue.contact_no.toString()
-            : ''}
-          onChange={(event) => {
-            const input = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
-            const limitedInput = input.slice(0, 10); // Limit to 10 digits
-            setFormValue({
-              ...formValue,
-              contact_no: limitedInput ? parseInt(limitedInput, 10) : null,
-            });
-          } }
-          type="number" htmlFor={"Contact-No"} defaultValue={""}        />
-        <MyInput
-          id="tel_no"
-          label="Telephone Number"
-          value={formValue && formValue.tel_no
-            ? formValue.tel_no.toString()
-            : ''}
-          onChange={(event) => setFormValue({
-            ...formValue,
-            tel_no: event.target.value ? parseInt(event.target.value, 10) : null
-          })}
-          type="number" htmlFor={"Telephone-Number"} defaultValue={""}        />
-         <MyInput
-          id="remarks"
-          label="Description or Remarks"
-          value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
-          onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-          type="text" htmlFor={"Description"} defaultValue={""}        />
-      <SubmitButton pending={false}/>
+
+            <MyInput
+                id="remarks"
+                label="Description or Remarks"
+                value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
+                onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
+                type="text" htmlFor={"Description"} defaultValue={""}        
+              />              
+      
+          <div className="pt-5">
+            <SubmitButton pending={false}/>
+          </div>
+      
       </form>
      
     </div>

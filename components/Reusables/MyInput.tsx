@@ -16,7 +16,7 @@ interface ReusableLabelInputProps {
 
 const MyInput: FC<ReusableLabelInputProps> = ({ label, id, value, onChange, required, type, placeholder}) => (
   <div className="flex flex-wrap items-center gap-[15px] px-5">
-    <Label.Root className="ock text-sm font-medium leading-6 text-cyan-900" htmlFor={label}>
+    <Label.Root className="block text-sm font-medium leading-6 text-cyan-900" htmlFor={label}>
       {label}
     </Label.Root>
     <input

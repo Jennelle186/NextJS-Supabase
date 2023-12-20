@@ -6,9 +6,11 @@ import { useFormState, useFormStatus } from "react-dom";
 import DropdownList from "@/components/Reusables/MyDropDownList";
 import { barangay } from "./barangay";
 import { WaterStationFormData } from "@/app/lib/definitions";
-import { initialState } from "@/app/lib/data";
 import SubmitButton from "@/components/Reusables/SubmitButton";
 
+const initialState = {
+  message: null,
+}
 
 export default function WaterStationProfileForm() {
   const [state, formAction] = useFormState(addWaterStation, initialState)
