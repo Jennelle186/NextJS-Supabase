@@ -23,23 +23,23 @@ const WaterTypes = async () => {
     console.log(user?.id, "user id on the list of waters")
     
     //check if the user has a water station
-    let waterStation; 
-    if(user){
-      const userId = user?.id ? user.id : null;
-      console.log(user.id, "user_id from the water types")
-      if(userId != null){
-        waterStation = await fetchWaterStationOfUSer(userId)
-      } else {
-        //handle the situation when userId is null
-        console.log('user id is null')
-      }
-    } else{
-      // handle the situation when user is not defined
-      console.log('user is not defined')
-    } 
+    // let waterStation; 
+    // if(user){
+    //   const userId = user?.id ? user.id : null;
+    //   console.log(user.id, "user_id from the water types")
+    //   if(userId != null){
+    //     waterStation = await fetchWaterStationOfUSer(userId)
+    //   } else {
+    //     //handle the situation when userId is null
+    //     console.log('user id is null')
+    //   }
+    // } else{
+    //   // handle the situation when user is not defined
+    //   console.log('user is not defined')
+    // } 
 
     //if there's no water station, then fill up the water station form first. 
-    if(!waterStation){
+    if(!water_types){
       return(
         <>
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -62,7 +62,7 @@ const WaterTypes = async () => {
 
     //if there is no water types available yet and the water station has already been filled up
     //show this link to let the user add water types
-    if(!water_types && waterStation){
+    if(!water_types){
       return (
         <>
         No Water Types Found
