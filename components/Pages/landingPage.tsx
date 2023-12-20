@@ -52,9 +52,9 @@ export default function LandingPage() {
                 <h1 className="text-center text-2xl sm:text-5xl py-10 font-medium">Water Refilling Station System</h1>
                 <p className="text-center font-small">Why you should opt for Water Refilling Services</p>
                 <div className="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-2 text-center mx-6 sm:mx-48 gap-x-5 gap-y-5 my-10">
-                  <div className="border border-2 shadow-lg rounded-lg py-20">
+                  <div className="border-2 shadow-lg rounded-lg py-20">
                     <img className="w-[full] h-[full]" src="https://img.freepik.com/free-vector/hand-drawn-ocean-plastic-pollution-illustration_23-2150378110.jpg?w=740&t=st=1702424823~exp=1702425423~hmac=d0008ffb507a1a097fa73a15c8dd2c096b3104a5f01cf066cd08018fa6e17851"></img>It helps in reducing plastic bottle waste</div>
-                  <div className="border border-2 shadow-lg rounded-lg py-20"><img className="w-[full] h-[full]" src="https://img.freepik.com/free-vector/drinking-water-concept-illustration_114360-10998.jpg?w=740&t=st=1702425866~exp=1702426466~hmac=ad1ddb48b827af34f126f20c1051cdacf85e1e5377710950999c954c641ea8cd"></img>It is cheaper than constantly buying bottled water</div>
+                  <div className="border-2 shadow-lg rounded-lg py-20"><img className="w-[full] h-[full]" src="https://img.freepik.com/free-vector/drinking-water-concept-illustration_114360-10998.jpg?w=740&t=st=1702425866~exp=1702426466~hmac=ad1ddb48b827af34f126f20c1051cdacf85e1e5377710950999c954c641ea8cd"></img>It is cheaper than constantly buying bottled water</div>
                 </div>
               </div>
             </div>
