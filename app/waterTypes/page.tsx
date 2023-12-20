@@ -1,6 +1,6 @@
 import DeleteWaterTypeButton from "@/components/WaterTypes/DeleteButton";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { fetchWaterStationOfUSer } from "../lib/data";
