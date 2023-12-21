@@ -27,6 +27,7 @@ export default async function AddWaterStationInfo() {
         <h2 className="mt-10 text-center text-2xl text-cyan-700 font-bold leading-9 tracking-tigh">
           Add Water Station Information
         </h2>
+        <p className="mt-1 text-sm text-center leading-6 text-gray-600">Use correct information so customers can find you.</p>
         <WaterStationProfileForm />
       </div>
     );

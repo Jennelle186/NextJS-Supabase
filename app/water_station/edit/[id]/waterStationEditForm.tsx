@@ -4,11 +4,11 @@ import { fetchWaterStation } from "@/app/lib/data";
 import { WaterStationType } from "@/app/lib/definitions";
 import DropdownList from "@/components/Reusables/MyDropDownList";
 import MyInput from "@/components/Reusables/MyInput";
-import SubmitButton from "@/components/Reusables/SubmitButton";
 import { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { barangay } from "../../new/barangay";
 import Link from "next/link";
+import * as Label from '@radix-ui/react-label';
 
 import {
   Select,
@@ -20,6 +20,7 @@ import {
 
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 
 const initialState = {
@@ -180,14 +181,14 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
             type="text" htmlFor={"Delivery-Mode"} defaultValue={""}        />          
           </div>
 
-          <div className="col-span-full">
-            <MyInput
+          <div className="col-span-full"> 
+              <Label.Root htmlFor="Remarks" className="block text-sm font-medium leading-6 text-cyan-600">Remarks</Label.Root>
+              <Textarea placeholder="Type your message here." 
                 id="remarks"
-                label="Description or Remarks"
+                name="remarks"
                 value={formValue && formValue.remarks ? formValue.remarks.toString() : ''}
                 onChange={(event) => setFormValue({ ...formValue, [event.target.name]: event.target.value })}
-                type="text" htmlFor={"Description"} defaultValue={""}        
-              />              
+              />         
 
           </div>
 

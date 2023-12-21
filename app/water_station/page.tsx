@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { WaterStationType } from "../lib/definitions";
 import WaterStationInfo from "./waterStationInfo";
+import { Button } from "@/components/ui/button";
 
 
 export default async function WaterStationPage() {
@@ -25,46 +26,38 @@ export default async function WaterStationPage() {
       <div>
         {water_station.length === 0 ? (
           <>
-           <p>No water station profile found</p>
-           <Link href="/water_station/new">
-            Add a water station
-           </Link>
+           <div className="space-y-12 py-10 mx-8">
+            <div className="border-b border-gray-900/10 pb-12">
+              <h1 className="text-base font-semibold leading-7 text-cyan-600">Welcome!</h1>
+              <p className="mt-1 text-sm leading-6 text-gray-600">You need to set up information about your water station first.</p>
+              <Link
+                href="/water_station/new"
+               >
+               <Button>Set Up Your Water Station Profile Now</Button>
+              </Link>
+            </div>
+          </div>
           </>
         ) : (
 
           <WaterStationInfo data={water_station}/>
-          // water_station.map((station) => (
-          //   <ul key={station.id}>
-          //     <li>ID: {station.id}</li>
-          //     <li>Name: {station.station_name}</li>
-          //     <li>Address: {station.address}</li>
-          //     <li>Barangay: {station.barangay}</li>
-          //     <li>Remarks: {station?.remarks}</li>
-          //     <li>Contact No: {station?.contact_no}</li>
-          //     <li>Tel No: {station?.tel_no}</li>
-          //     <li>Delivery mode: {station.delivery_mode}</li>
-          //     <li>Landmark: {station?.landmark}</li>
-          //     <Link
-          //         href={{
-          //           pathname: `/water_station/edit/${station.id}`,
-          //           query: {stationId: station.id},
-          //           // query: { station: JSON.stringify(station) },
-          //         }}
-          //       >
-          //         Edit  
-          //       </Link>
-          //   </ul>
-
-          // ))
         )}
       </div>
     );
   } else {
     return (
       <div>
-        <h1>Water Station Profile</h1>
-        <Link href="/water_station/new">Edit your profile</Link>
-        <p>No water station profile found</p>
+           <div className="space-y-12 py-10 mx-8">
+            <div className="border-b border-gray-900/10 pb-12">
+              <h1 className="text-base font-semibold leading-7 text-cyan-600">Welcome!</h1>
+              <p className="mt-1 text-sm leading-6 text-gray-600">You need to set up information about your water station first.</p>
+              <Link
+                href="/water_station/new"
+               >
+               <Button>Set Up Your Water Station Profile Now</Button>
+              </Link>
+            </div>
+          </div>
       </div>
     );
   }
