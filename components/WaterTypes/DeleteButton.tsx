@@ -4,6 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import DialogComponent from "../Reusables/Modal";
+import { Button } from "../ui/button";
 
 interface DeleteWaterTypeButtonProps {
   water_id: String;
@@ -55,9 +56,9 @@ const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
   return (
     <div>
 
-      <button className="font-bold py-2 px-4 rounded" onClick={toggleOpen}>
-        Delete Water Type
-      </button>
+      <Button className="font-bold py-2 px-4 rounded" onClick={toggleOpen} variant="destructive">
+        Delete
+      </Button>
       <DialogComponent isOpen={isOpen} onClose={toggleClose}>
          <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Delete</h3>
 

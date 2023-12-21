@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { WaterStationType } from "../lib/definitions";
+import WaterStationInfo from "./waterStationInfo";
 
 
 export default async function WaterStationPage() {
@@ -22,7 +23,6 @@ export default async function WaterStationPage() {
     
     return (
       <div>
-        <h1>Water Station Profile</h1>
         {water_station.length === 0 ? (
           <>
            <p>No water station profile found</p>
@@ -31,29 +31,31 @@ export default async function WaterStationPage() {
            </Link>
           </>
         ) : (
-          water_station.map((station) => (
-            <ul key={station.id}>
-              <li>ID: {station.id}</li>
-              <li>Name: {station.station_name}</li>
-              <li>Address: {station.address}</li>
-              <li>Barangay: {station.barangay}</li>
-              <li>Remarks: {station?.remarks}</li>
-              <li>Contact No: {station?.contact_no}</li>
-              <li>Tel No: {station?.tel_no}</li>
-              <li>Delivery mode: {station.delivery_mode}</li>
-              <li>Landmark: {station?.landmark}</li>
-              <Link
-                  href={{
-                    pathname: `/water_station/edit/${station.id}`,
-                    query: {stationId: station.id},
-                    // query: { station: JSON.stringify(station) },
-                  }}
-                >
-                  Edit  
-                </Link>
-            </ul>
 
-          ))
+          <WaterStationInfo data={water_station}/>
+          // water_station.map((station) => (
+          //   <ul key={station.id}>
+          //     <li>ID: {station.id}</li>
+          //     <li>Name: {station.station_name}</li>
+          //     <li>Address: {station.address}</li>
+          //     <li>Barangay: {station.barangay}</li>
+          //     <li>Remarks: {station?.remarks}</li>
+          //     <li>Contact No: {station?.contact_no}</li>
+          //     <li>Tel No: {station?.tel_no}</li>
+          //     <li>Delivery mode: {station.delivery_mode}</li>
+          //     <li>Landmark: {station?.landmark}</li>
+          //     <Link
+          //         href={{
+          //           pathname: `/water_station/edit/${station.id}`,
+          //           query: {stationId: station.id},
+          //           // query: { station: JSON.stringify(station) },
+          //         }}
+          //       >
+          //         Edit  
+          //       </Link>
+          //   </ul>
+
+          // ))
         )}
       </div>
     );

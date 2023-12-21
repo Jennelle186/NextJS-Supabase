@@ -5,6 +5,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { fetchWaterStationOfUSer } from "../lib/data";
 import SubmitButton from "@/components/Reusables/SubmitButton";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic'
@@ -22,23 +24,6 @@ const WaterTypes = async () => {
     const {data: water_types} = await supabase.from("water_type").select().eq('user_id', user?.id)
     console.log(user?.id, "user id on the list of waters")
     
-    // check if the user has a water station
-    // let waterStation; 
-    // if(user){
-    //   const userId = user?.id ? user.id : null;
-    //   console.log(user.id, "user_id from the water types")
-    //   if(userId != null){
-    //     waterStation = await fetchWaterStationOfUSer(userId)
-    //   } else {
-    //     //handle the situation when userId is null
-    //     console.log('user id is null')
-    //   }
-    // } else{
-    //   // handle the situation when user is not defined
-    //   console.log('user is not defined')
-    // } 
-
-    //if there's no water station, then fill up the water station form first. 
     if(!water_types){
       return(
         <>
@@ -75,29 +60,14 @@ const WaterTypes = async () => {
 
     return (
       <div>
-        <h1>List of Water Types</h1>
-        <Link href='/waterTypes/new'>
-           <SubmitButton pending={false}>Add New Water Type</SubmitButton>
-        </Link>
-        {water_types?.map((water) => (
-          <ul key={water.id}>
-            <li>ID: {water.id}</li>
-            <li>Type of Water: {water.name}</li>
-        <li>Price: {water.price}</li>
-
-        <Link
-          href={{
-            pathname: `/waterTypes/edit/${water.id}`,
-            query: water // the data
-          }}
-        >
-          <SubmitButton pending={false}>Edit </SubmitButton>
-        </Link>
-
-          <DeleteWaterTypeButton water_id ={water.id} water_name={water.name}/>
-
-          </ul>
-        ))}
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold dark:text-indigo-400 py-10">List of Water Types</h1>
+          <Link href='/waterTypes/new'>
+            <SubmitButton pending={false}>+ Add New Water Type</SubmitButton>
+          </Link>
+        </div>
+      
+        <DataTable columns={columns} data={water_types}/>
       </div>
 
     )

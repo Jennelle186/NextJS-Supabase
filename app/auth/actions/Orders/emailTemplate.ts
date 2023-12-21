@@ -31,25 +31,37 @@ import { InvoiceEmailData } from "@/app/lib/definitions";
   
 
     return `
-          Dear ${firstName} ${lastName}, this serves as your invoice of date ${new Date().toDateString()}. 
-          <br/>
-          Your information:
-          Address: ${address}
-          Contact_no: ${contact_no}
-          <br/>
-          Thank you for placing an order with ${water_station_name}.
-          <br/>
-          Order details:
-          Invoice ID: ${order_id}
-          <br/>
-          ${itemsTable}
+        <div style="max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
 
-          ${JSON.stringify(cart)}
-          <br/>
-          Total: ${total}
-          Remarks: ${remarks}
-          <br/>
-          Best regards,
-          ${water_station_name}
+          <div style="text-align: center; font-size: 24px; margin-bottom: 20px;">Invoice</div>
+
+          <div style="margin-bottom: 15px;">
+              <p>Dear ${firstName} ${lastName}, this serves as your invoice of date ${new Date().toDateString()}.</p>
+              <p>Your information:</p>
+              <p>Address: ${address}</p>
+              <p>Contact_no: ${contact_no}</p>
+              <p>Thank you for placing an order with ${water_station_name}.</p>
+              <br/>
+          </div>
+
+          <div style="margin-top: 20px;">
+              <p>Order details:</p>
+              <p>Invoice ID: ${order_id}</p>
+              ${itemsTable}
+              <br/>
+          </div>
+
+          <div style="margin-top: 20px;">
+              <p>Total: ${total}</p>
+              <p>Remarks: ${remarks}</p>
+              <br/>
+          </div>
+
+          <div style="margin-top: 20px;">
+              <p>Best regards, ${water_station_name}</p>
+              <br/>
+          </div>
+
+        </div>
       `;
   }
