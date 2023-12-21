@@ -72,7 +72,7 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
             />
       
             <div className="flex justify-center mt-4">
-                <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">
+                <Button className="bg-cyan-600 hover:bg-cyan-700 text-white" type="submit">
                 Save Changes
                 </Button>
             </div>
