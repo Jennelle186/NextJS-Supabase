@@ -22,7 +22,7 @@ const WaterTypes = async () => {
     const {data: water_types} = await supabase.from("water_type").select().eq('user_id', user?.id)
     console.log(user?.id, "user id on the list of waters")
     
-    //check if the user has a water station
+    // check if the user has a water station
     // let waterStation; 
     // if(user){
     //   const userId = user?.id ? user.id : null;

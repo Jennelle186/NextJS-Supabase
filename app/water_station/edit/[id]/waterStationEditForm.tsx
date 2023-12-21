@@ -76,7 +76,7 @@ const EditWaterStationInformation: React.FC<{ id: string }> = ({ id }) => {
   },[selectedBarangay])
   
   return (
-    <div className="border-b border-gray-900/10 pb-12">
+    <div className="border-b border-gray-900/10 pb-12 pt-5">
       <Link href="/water_station">
         Back
       </Link>

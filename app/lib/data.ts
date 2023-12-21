@@ -3,12 +3,13 @@
 import { createClientComponentClient, createServerActionClient, createServerComponentClient} from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-const cookieStore = cookies()
-const supabase : any = createServerActionClient({ cookies: () => cookieStore })
 
 
 export async function fetchUser() {
     try{
+
+    const cookieStore = cookies()
+    const supabase : any = createServerActionClient({ cookies: () => cookieStore })
 
         const {data: {user}} = await supabase.auth.getUser();
 
@@ -27,6 +28,9 @@ export async function fetchWaterStation(id: string){
       throw new Error("Id cannot be null or empty.");
     }
     try{
+        const cookieStore = cookies()
+        const supabase : any = createServerActionClient({ cookies: () => cookieStore })
+
         const {data, error, status} = await supabase
             .from('water_refilling_station')
             .select()
@@ -51,6 +55,9 @@ export async function fetchWaterStation(id: string){
 export async function fetchWaterStationOfUSer(user_id: string) {
 
     try {
+        const cookieStore = cookies()
+        const supabase : any = createServerActionClient({ cookies: () => cookieStore })
+
         console.log(user_id, "user id from the data.ts")
         const { data, error, status } = await supabase
         .from('water_refilling_station')
