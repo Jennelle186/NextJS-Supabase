@@ -34,7 +34,7 @@ const DropdownList: React.FC<Props> = ({ options, selected, onSelect, required, 
       }}>
       {({ open }) => (
         <>
-          <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+          <Listbox.Label className="block text-sm font-medium leading-6 text-cyan-600">
           {title}
           </Listbox.Label>
           <div className="relative mt-2">

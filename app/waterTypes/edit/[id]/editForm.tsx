@@ -42,45 +42,45 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
     }
 
     return (
-        <div className="flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-indigo-600 py-8">Editing Water Type Information</h1>
-        <Link href="/waterTypes" className="text-indigo-500 font-semibold mb-4 hover:underline">
-          ≼ Back
-        </Link>
-      
-        <div className="flex justify-center w-full">
-          <form onSubmit={onSubmit} className="border-4 border-gray-300 rounded-lg p-8 text-gray-600 w-[55%]">
-            <MyInput
-              id="name"
-              label="Water Type Name"
-              required
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              htmlFor={'WaterTypeName'}
-              defaultValue={''}
-            />
-            <MyInput
-              id="price"
-              label="Price per Liter"
-              required
-              type="number"
-              value={formData.price}
-              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-              htmlFor={'PricePerLiter'}
-              defaultValue={''}
-            />
-      
-            <div className="flex justify-center mt-4">
-                <Button className="bg-cyan-600 hover:bg-cyan-700 text-white" type="submit">
-                Save Changes
-                </Button>
-            </div>
-            <p className="mt-4 text-green-500 flex  justify-center">{message}</p> 
-          </form>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-3xl font-bold text-indigo-600 py-5">Editing Water Type Information</h1>
+      <Link href="/waterTypes" className="text-indigo-500 font-semibold mb-4 hover:underline">
+        ≼ Back
+      </Link>
+
+      <div className="flex justify-center w-full lg:w-3/4 xl:w-1/2">
+        <form onSubmit={onSubmit} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
+          <MyInput
+            id="name"
+            label="Water Type Name"
+            required
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            htmlFor={'WaterTypeName'}
+            defaultValue={''}
+          />
+          <MyInput
+            id="price"
+            label="Price per Liter"
+            required
+            type="number"
+            value={formData.price}
+            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+            htmlFor={'PricePerLiter'}
+            defaultValue={''}
+          />
+
+          <div className="flex justify-center mt-4">
+            <Button className="bg-cyan-600 hover:bg-cyan-700 text-white" type="submit">
+              Save Changes
+            </Button>
+          </div>
+          <p className="mt-4 text-green-500 flex justify-center">{message}</p>
+        </form>
       </div>
-      
+    </div>
+
     );
 }
 
