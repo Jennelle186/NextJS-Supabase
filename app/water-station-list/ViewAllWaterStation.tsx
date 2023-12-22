@@ -55,16 +55,13 @@ export default function ViewAllWaterStation({ data }: UserWaterStationViewProps)
     </form>
 
     
-    {filteredStations.map((stations, index) => (
-      <div className="divide-y divide-slate-100">
+    {filteredStations.map((station,index) => (
+      <div key={index} className="divide-y divide-slate-100">
         <ul className="divide-y divide-slate-100">
-          <FilteredStation key={index} filteredStation={stations} />
+          <FilteredStation filteredStation={station} />
         </ul>
       </div>
-       
-      ))}
-
-
+    ))}
     </>
   );
 }
