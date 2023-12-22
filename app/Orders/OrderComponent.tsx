@@ -155,9 +155,7 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
       });
 
       setCart([])
-
       setForPrint(true);
-
       setLoading(true);
 
     }catch(err){

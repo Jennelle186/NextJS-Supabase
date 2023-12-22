@@ -46,10 +46,10 @@ const DeleteWaterTypeButton: React.FC<DeleteWaterTypeButtonProps> = ({
         return setMessage('Succesfully deleted!'), router.refresh(), toggleClose()
 
     } catch (error: any) {
-      // if(error.code == 'PGRST116') return 'Row not found';
-      return setMessage(error.message)
-      // console.error("Error deleting record:", error);
-      // setErrorMessage("An error occurred while deleting the record.");
+        // console.log(error, "error in the water types")
+      return error.code === "23503" ? setMessage("Unable to delete because an order has already been placed for this item. You must first delete the order for this item") : setMessage(error.message)
+      
+      // setMessage(error.message)
     }
   };
 

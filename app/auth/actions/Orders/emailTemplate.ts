@@ -4,6 +4,14 @@ import { InvoiceEmailData } from "@/app/lib/definitions";
   export default function generateInvoiceEmailBody(data: InvoiceEmailData): string {
     const { firstName, lastName, order_id, cart, total, remarks, water_station_name, address, delivery_mode, contact_no } = data;
   
+    const formatCurrency = (amount: number) => {
+      const formatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP',
+      });
+      return formatter.format(amount);
+    };
+
     const itemsTable = `
     <table class="table-auto">
       <thead>
@@ -52,7 +60,7 @@ import { InvoiceEmailData } from "@/app/lib/definitions";
           </div>
 
           <div style="margin-top: 20px;">
-              <p>Total: ${total}</p>
+              <p>Total: ${formatCurrency(total)}</p>
               <p>Remarks: ${remarks}</p>
               <br/>
           </div>
