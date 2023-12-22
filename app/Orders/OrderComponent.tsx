@@ -1,15 +1,15 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { WaterStationType, WaterType } from '../lib/definitions';
 import MyInput from '@/components/Reusables/MyInput';
 import addCustomerOrder from '../auth/actions/Orders/addOrders';
-import SubmitButton from '@/components/Reusables/SubmitButton';
 import BasicDocument from './Invoice/print';
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import dynamic from 'next/dynamic';
-import { Router } from 'lucide-react';
+import { PDFDownloadLink} from '@react-pdf/renderer';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import StationDetailsComponent from './stationDetails';
+import CartComponent from './CartComponent';
+import CustomerInfoComponent from './CustomerInformation';
 
 interface User {
   firstName: string;
@@ -119,7 +119,6 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
     const [loading, setLoading] = useState<Boolean>(false);
   
 
-
   //form submission
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -168,200 +167,74 @@ const OrderComponent: React.FC<OrderComponentProps> = ({
 
   const router = useRouter()
 
+
   return (
-    <div id="CheckOutPage" className='mt-4 max-w-[1100px] msx-auto'>
-      <div className='text-2xl font-bold mt-4 mb-4'>Order Page</div>
-      <h1><p>{message}</p></h1>
-      {/* Render other components based on the data */}
-      <h1>Station Details: </h1>
-      <strong>Station Name:</strong> {refillingStation?.station_name} <br />
-      <strong>Address:</strong> {refillingStation?.address + "," + refillingStation?.barangay} <br />
-      <strong>Landmark:</strong> {refillingStation?.landmark} <br />
-      <strong>Contact No:</strong> {refillingStation?.contact_no} <br />
-      {refillingStation?.tel_no && (
-        <p>Tel No: {refillingStation.tel_no}</p>
-      )}
-      <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
-        User Form
-      </div>
-      
-      <form onSubmit={handleFormSubmit}>
-      <div className="justify-center space-y-12">
-        
-        {/* Hidden input fields */}
-        <input type="hidden" name="refilling_station_name" value={refillingStation?.station_name}/>
-        <input type="hidden" name="refilling_station_id" value={refillingStation?.id}/>
-        <input type="hidden" name="refilling_station_user_id" value={refillingStation?.user_id}/>
+  <div className='py-7'>
+      <h3 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">Order page for {refillingStation?.station_name}</h3>
+            <p className="mt-4 text-gray-500 text-justify">
+              {refillingStation?.remarks}
+            </p>
+          {/* <StationDetailsComponent refillingStation={refillingStation}/> */}
+      <div id="CheckOutPage" className='bg-white sm:py-3'>
+        <div className='flex justify-center items-center p-4'>
+          <div className='rounded-lg overflow-hidden border border-[#92DFF3] bg-white w-[85%] max-w-[500px] p-2'>
+            {/* Render other components based on the data */}
+            <StationDetailsComponent refillingStation={refillingStation}/>
+          </div>
+        </div>
 
-    
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">Use an active email address and contact number so we can inform you of your orders.</p>
-
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-            <MyInput
-              id="firstName"
-              label="First Name"
-              value={user.firstName}
-              onChange={handleInputChange}
-              required
-              type="text" htmlFor={"First Name"} defaultValue={''} /> 
-            </div>
-
-            <div className="sm:col-span-3">
-            <MyInput
-                id="lastName"
-                label="Last Name"
-                value={user.lastName}
-                onChange={handleInputChange}
-                required
-                type="text" htmlFor={'First Name'} defaultValue={''}/> 
-            </div>
-
-            <div className="sm:col-span-3">
-            <MyInput
-                id="contact_no"
-                label="Contact No"
-                value={user.contact_no}
-                onChange={handleInputChange}
-                required
-                type="number" htmlFor={'First Name'} defaultValue={''}/> 
-            </div>
-
-            <div className="sm:col-span-3">
-            <MyInput
-                id="email"
-                label="Email"
-                value={user.email}
-                onChange={handleInputChange}
-                required
-                type="email"
-                placeholder='We will be sending you the invoice on your email so please provide an active email.' 
-                htmlFor={'Email'} defaultValue={''} /> 
-            </div>
-
-            <div className="col-span-full">
-              <MyInput
-                id="address"
-                label="Bldg No, Zone, Street, Barangay"
-                value={user.address}
-                onChange={handleInputChange}
-                required
-                type="text" htmlFor={'Address'} defaultValue={''} />
-            </div>
-
-            <div className="col-span-full">
-              <MyInput
-                id="delivery_mode"
-                label={`Available Delivery Mode: ${refillingStation?.delivery_mode}`}
-                value={user.delivery_mode}
-                onChange={handleInputChange}
-                required
-                placeholder='Enter the chosen delivery mode if there is any. Else, you may enter your additional instructions for deliveries or pick-up'
-                type="text" htmlFor={'Delivery-Mode'} defaultValue={''}/> 
-            </div>
-
-            <div className='col-span-full'>
-            <MyInput
-                id="remarks"
-                label="Remarks or Instructions you would like to add"
-                value={user.remarks}
-                onChange={handleInputChange}
-                type="text" htmlFor={'Remarks'} defaultValue={''} />
-            </div>
-
-              {cart.length !== 0 ? (
-                <>
-                <div className="mt-6 flex items-center justify-end gap-x-5">
-                  <Button type="button" variant="outline" onClick={() => router.back()}>
-                    Cancel  
-                  </Button>
-                  <Button type="submit">
-                    Save
-                  </Button>
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 sm:mt-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+              <article className="flex max-w-xl flex-col items-start justify-between">
+                  {/* Component for the list of available waters and adding it to the cart */}
+                    {waterTypes ? (
+                      <>
+                        <CartComponent
+                          cart={cart}
+                          waterTypes={waterTypes}
+                          addToCart={addToCart} 
+                          addQuantity={addQuantity}
+                          reduceQuantity={reduceQuantity}
+                          removeFromCart={removeFromCart}
+                          total={total}
+                        />
+                      </>
+                    ) : (
+                      <p>No water types available</p>
+                    )}
+              </article>
+              {/* Customer Information Component */}
+              <div className="flex max-w-xl flex-col items-start justify-between">
+                <div className="group relative">     
+                    <CustomerInfoComponent
+                      handleFormSubmit={handleFormSubmit}
+                      handleInputChange={handleInputChange}
+                      user={user}
+                      refillingStation={refillingStation}
+                      cart={cart}
+                    />
+                    <p className="mt-4 text-green-500 flex justify-center">{message}</p>
                 </div>
-                </>
-              
-              ) : (
-                <>You must add waters for your orders</>
-              )}
-
-
-          </div>
-        </div>
-
-      </div>
-
-    </form>
-    
-      {forPrinting === true && 
-      <>
-      <h1>This is your invoice. Please download it</h1>
-        <PDFDownloadLink document={<BasicDocument cart={cart} total={total} user={user}/>} fileName="my-order.pdf">
-        {({ blob, url, loading, error }) =>
-          loading ? 'Loading document...' : 'Download now!'
-        }
-      </PDFDownloadLink>
-      </>
-      }
-
-      <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
-        Add your order
-      </div>
-    
-
-      <h1>Water Available:</h1>
-      {waterTypes?.map((waterType) => (
-       <div key={waterType.id}>
-       <strong>Name:</strong> {waterType.name}, <strong>Price:</strong> {waterType.price}
-       <button onClick={() => addToCart(waterType)}>Add to Cart (Per Liter) </button>
-     </div>
-      ))}
-      <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
-        Your Cart
-      </div>
-          <ul>
-            {cart.map((item) => (
-              <li key={item.id}>
-                <p>{item.name} - ${item.price} </p>
-                <p>Liter: {item.quantity}</p> 
-                <p>Unit price: {item.quantity * item.price}</p>
-                <button onClick={() => addQuantity(item.id)}>+ Add more Liter(s)</button>
-                <button onClick={() => reduceQuantity(item.id)}>- Reduce Liter(s)</button>
-                <br/>
-                <button onClick={() => removeFromCart(item.id)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-
-        <div className="py-3 flex items-center text-sm text-gray-800 before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-gray-600 dark:after:border-gray-600">
-          Your Final Order
-        </div>
-
-          <div>
-            {cart.length === 0 ? (
-              <h3>You do not have any orders</h3>
-            ): (
-              <div>
-                {cart.map((item,i) => (
-                  <ul key={i}>
-                    <li>{item.name} - {item.price}</li>
-                    <li>Unit Price: {item.price * item.quantity}</li>
-                  </ul>
-                ))}
-                <h3>Total Amount of your purchase: Php {total}</h3>
               </div>
-            )}          
-          </div>
+          </div> 
+      </div>
         
-        </div>
-      
-
+        {/* PRINTING IS NOT ENTIRELY OKAY SO WE SETTLED WITH EMAIL */}
+        {/* {forPrinting === true && 
+        <>
+          <h1>This is your invoice. Please download it</h1>
+            <PDFDownloadLink document={<BasicDocument cart={cart} total={total} user={user}/>} fileName="my-order.pdf">
+            {({ blob, url, loading, error }) =>
+              loading ? 'Loading document...' : 'Download now!'
+            }
+          </PDFDownloadLink>
+        </>
+        }         */}
+  </div>
   );
 };
 
 export default OrderComponent;
+
 
 
 

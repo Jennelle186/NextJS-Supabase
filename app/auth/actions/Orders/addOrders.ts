@@ -135,7 +135,7 @@ export default async function addCustomerOrder(cart: any, total: number, formDat
             }
 
         
-            return {  message: `Succesfully added the data` }
+            return {  message: `You succesfully placed your order. Please check your email for the invoice.` }
     }catch(e){
         return {message: "Failed to submit the form."}
     }
