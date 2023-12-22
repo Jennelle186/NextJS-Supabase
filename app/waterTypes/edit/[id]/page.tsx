@@ -21,8 +21,7 @@ const EditWaterTypes = async ({searchParams: water_types} : {searchParams: {
  
 export default EditWaterTypes;
 
-// 'use client'
-// import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
+
 // import WaterTypeEditForm from "./editForm";
 // import { useState } from "react";
 
