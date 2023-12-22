@@ -130,18 +130,19 @@ export default function NavbarComponent({ session} : {session: any}) {
                         </a>
                       ))}
                     </div>
-                    {session ? (
-                      <form action="/auth/signout" method="post">
-                       <Button type="submit" variant="destructive">
-                         Sign out
-                       </Button>
-                   </form>
-                    ) : (
-                        <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-                        Login <span aria-hidden="true">&rarr;</span>
-                      </Link>
+                    <div className='py-5'>
+                      {session ? (
+                        <form action="/auth/signout" method="post">
+                        <Button type="submit" variant="destructive">
+                          Sign out
+                        </Button>
+                    </form>
+                      ) : (
+                          <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+                          Login <span aria-hidden="true">&rarr;</span>
+                        </Link>
                     )}
-                   
+                    </div>
                   </div>
                 </div>
               </Dialog.Panel>

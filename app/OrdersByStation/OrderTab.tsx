@@ -16,7 +16,7 @@ interface OrderTabProps {
 
 const OrderTab: React.FC<OrderTabProps> = ({ orders, deliveredOrders, cancelledOrders }: OrderTabProps) => (
   <Tabs.Root
-    className="flex flex-col shadow-[0_2px_10px] "
+    className="relative w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
     defaultValue="tab1"
   >
     <Tabs.List className="flex border-b border-mauve6" aria-label="Manage your account">

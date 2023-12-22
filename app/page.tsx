@@ -27,7 +27,7 @@ export default async function Home() {
       {session ? (
         <section className="my-5">
           <div className="container">
-            <h1 className="text-3xl font-bold">All Orders</h1>
+            <h1 className="text-3xl font-bold mb-5">All Orders</h1>
             <ViewOrdersByWaterStation/>
           </div>
         </section>
