@@ -14,7 +14,7 @@ export async function editWaterType(formData: FormData) {
     const price = formData.get('price')
     const idValue = formData.get('id');
     console.log('ID value:', idValue);
-    const {data, error} = await supabase.from('water_type').upsert({name: name, price: price, user_id: user?.id}).eq('id', idValue).select('*')
+    const {data, error} = await supabase.from('water_type').update({name: name, price: price, user_id: user?.id}).eq('id', idValue)
     console.log(data, "data water")
     console.log(error, "error water type")
 
