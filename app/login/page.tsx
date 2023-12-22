@@ -33,7 +33,7 @@ const LoginPage = () => {
       <h1 className="text-2xl font-semibold mb-4">Log in with Gmail</h1>
       <form action="#" method="POST">
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-600">The Water Refiling Station System</label>
+          <label htmlFor="username" className="block text-gray-600">The Water Refiling Station System for Water Station Owners ONLY.</label>
        </div>
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-600">Requires a Gmail Log for security purposes</label>
