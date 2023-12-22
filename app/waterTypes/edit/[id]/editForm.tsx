@@ -50,6 +50,7 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
 
       <div className="flex justify-center w-full lg:w-3/4 xl:w-1/2">
         <form onSubmit={onSubmit} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
+          <input type="hidden" value={water_types.id} name="id"/>
           <MyInput
             id="name"
             label="Water Type Name"
