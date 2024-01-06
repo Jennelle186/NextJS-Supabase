@@ -49,7 +49,7 @@ const FilteredStation: React.FC<UserWaterStationViewProps> = ({ filteredStation 
               </div>
               <div className="flex-none w-full mt-2 font-normal">
                 <dt className="sr-only">Remarks</dt>
-                <dd className="text-slate-400">{firstStation.remarks}</dd>
+                <dd className="text-slate-400 text-justify">{firstStation.remarks}</dd>
               </div>
               <div className="flex-none w-full mt-2 font-normal">
                 <dt className="text-sm font-medium leading-6 text-cyan-600">Available Water:</dt>

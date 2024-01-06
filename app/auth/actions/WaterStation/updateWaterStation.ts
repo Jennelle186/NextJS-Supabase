@@ -58,7 +58,7 @@ export default async function UpdateWaterStation(prevState: any, formData: FormD
         } 
 
         revalidatePath('/water_station')
-        return { message: `Succesfully added the data` }
+        return { message: `Succesfully updated the data` }
     }catch(e){
         return {message: "Failed to submit the form."}
     }

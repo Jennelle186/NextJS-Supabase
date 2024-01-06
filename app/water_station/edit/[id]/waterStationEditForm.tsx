@@ -10,15 +10,6 @@ import { barangay } from "../../new/barangay";
 import Link from "next/link";
 import * as Label from '@radix-ui/react-label';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 

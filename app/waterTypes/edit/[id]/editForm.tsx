@@ -20,9 +20,9 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
 
     async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        try {
+        try { 
             const formData = new FormData(event.currentTarget);
-            formData.append("id", String(water_types.id));
+            // formData.append("id", String(water_types.id));
             const res = await editWaterType(formData);
             setMessage(res.message);
             // const res = await editWaterType(new FormData(event.currentTarget));
