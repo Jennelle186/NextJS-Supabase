@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers"
 
 
-export async function editWaterType(formData: FormData): Promise<{ message: string }> {    
+export default async function editWaterType(prevState: any, formData: FormData): Promise<{ message: string }> {    
     const cookieStore = cookies()
     const supabase = createServerActionClient({ cookies: () => cookieStore })
 

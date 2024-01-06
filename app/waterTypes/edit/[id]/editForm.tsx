@@ -1,16 +1,22 @@
 'use client'
 
-import { editWaterType } from "@/app/auth/actions/waterTypes/editWaterTypes";
+import editWaterType from "@/app/auth/actions/waterTypes/editWaterTypes";
 import { WaterType } from "@/app/lib/definitions";
 import MyInput from "@/components/Reusables/MyInput";
 import { Button } from "@/components/ui/button";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { useState } from "react";
+import { useFormState } from "react-dom";
+
+const initialState = {
+  message: null,
+}
 
 
 export default function WaterTypeEditForm({ session, water_types }: { session: Session | null; water_types: WaterType }) {
     const [message, setMessage] = useState<string>('');
+    const [state, formAction] = useFormState(editWaterType, initialState)
     const [open, setOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<WaterType>({
         name: water_types.name,
@@ -18,28 +24,28 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
         id: water_types.id,
     });
 
-    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        try { 
-            const formData = new FormData(event.currentTarget);
-            // formData.append("id", String(water_types.id));
-            const res = await editWaterType(formData);
-            setMessage(res.message);
-            // const res = await editWaterType(new FormData(event.currentTarget));
-            // setMessage(res.message)
-            // console.log(formData, "formdata")
+    // async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    //     event.preventDefault();
+    //     try { 
+    //         const formData = new FormData(event.currentTarget);
+    //         // formData.append("id", String(water_types.id));
+    //         const res = await editWaterType(formData);
+    //         setMessage(res.message);
+    //         // const res = await editWaterType(new FormData(event.currentTarget));
+    //         // setMessage(res.message)
+    //         // console.log(formData, "formdata")
 
-            setOpen(true);
+    //         setOpen(true);
             
-        } catch (err) {
-            console.error(err, "error");
-            if (err instanceof Error) {
-                setMessage(err.message);
-            } else {
-                setMessage("An error occurred");
-            }
-        }
-    }
+    //     } catch (err) {
+    //         console.error(err, "error");
+    //         if (err instanceof Error) {
+    //             setMessage(err.message);
+    //         } else {
+    //             setMessage("An error occurred");
+    //         }
+    //     }
+    // }
 
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -48,8 +54,9 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
         ≼ Back
       </Link>
 
+
       <div className="flex justify-center w-full lg:w-3/4 xl:w-1/2">
-        <form onSubmit={onSubmit} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
+        <form action={formAction} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
           <input type="hidden" value={water_types.id} name="id"/>
           <MyInput
             id="name"
@@ -77,7 +84,7 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
               Save Changes
             </Button>
           </div>
-          <p className="mt-4 text-green-500 flex justify-center">{message}</p>
+          <p className="mt-4 text-green-500 flex justify-center">{state.message}</p>
         </form>
       </div>
     </div>
@@ -86,4 +93,8 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
 }
 
 
+
+// function editWaterTypeterType(state: { message: null; }): Promise<{ message: null; }> {
+//   throw new Error("Function not implemented.");
+// }
 
