@@ -1,12 +1,13 @@
 'use client'
 
 import editWaterType from "@/app/auth/actions/waterTypes/editWaterTypes";
+import { fetchWaterTypes } from "@/app/lib/data";
 import { WaterType } from "@/app/lib/definitions";
 import MyInput from "@/components/Reusables/MyInput";
 import { Button } from "@/components/ui/button";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 const initialState = {
@@ -19,9 +20,9 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
     const [state, formAction] = useFormState(editWaterType, initialState)
     const [open, setOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<WaterType>({
-        name: water_types.name,
-        price: water_types.price,
-        id: water_types.id,
+        name: "",
+        price: 0,
+        id: "",
     });
 
     // async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -47,6 +48,29 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
     //     }
     // }
 
+    const getWaterTypes = useCallback(async () => {
+      try {
+        // null or empty check before the fetch call
+        if(!water_types.id) {
+          throw new Error("Id cannot be null or empty.");
+        }
+        const water_station = await fetchWaterTypes(water_types.id);
+        setFormData(water_station);
+      } catch (error: Error | unknown) {
+        console.error('getWaterType error:', error);
+        // generic error when caught error is not an instance of Error
+        if (!(error instanceof Error)) {
+          error = new Error('An error occurred while getting the water station.');
+        }
+        
+      }
+    }, [water_types.id]);
+  
+    useEffect(() => {
+      // getProfile(),
+      getWaterTypes()
+    },[getWaterTypes])
+
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-3xl font-bold text-indigo-600 py-5">Editing Water Type Information</h1>
@@ -59,7 +83,7 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
         <form action={formAction} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
           {water_types.id}
           <input type="hidden" 
-            value={water_types.id} 
+            value={formData.id} 
             name="id"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />

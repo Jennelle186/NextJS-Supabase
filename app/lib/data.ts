@@ -77,3 +77,33 @@ export async function fetchWaterStationOfUSer(user_id: string) {
       throw new Error('Failed to fetch water refilling station data');
     }
   }
+
+  //get waterType
+  export async function fetchWaterTypes(id: string){
+    // null or empty check before the fetch call
+    if(!id) {
+      throw new Error("Id cannot be null or empty.");
+    }
+    try{
+        const cookieStore = cookies()
+        const supabase : any = createServerActionClient({ cookies: () => cookieStore })
+
+        const {data, error, status} = await supabase
+            .from('water_type')
+            .select()
+            .eq('id', id)
+        
+        if(error && status !== 406){
+            throw error
+        }
+        const water_station = data?.map((station : any) => ({
+            ...station
+        }))
+        
+        return water_station?.[0]
+    }catch(error){
+        // generic error message with specific error.
+        console.error('Failed to fetch water refilling station data: ', error);
+        throw new Error(`Failed to fetch water refilling station data - ${error}`)
+    }
+}
