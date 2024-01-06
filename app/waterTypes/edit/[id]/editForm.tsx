@@ -57,7 +57,12 @@ export default function WaterTypeEditForm({ session, water_types }: { session: S
 
       <div className="flex justify-center w-full lg:w-3/4 xl:w-1/2">
         <form action={formAction} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
-          <input type="hidden" value={water_types.id} name="id"/>
+          {water_types.id}
+          <input type="hidden" 
+            value={water_types.id} 
+            name="id"
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
           <MyInput
             id="name"
             label="Water Type Name"

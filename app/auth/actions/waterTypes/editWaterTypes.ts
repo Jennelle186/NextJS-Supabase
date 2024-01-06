@@ -11,6 +11,7 @@ import { cookies } from "next/headers"
 export default async function editWaterType(prevState: any, formData: FormData): Promise<{ message: string }> {    
     const cookieStore = cookies()
     const supabase = createServerActionClient({ cookies: () => cookieStore })
+    console.log(formData.get('id'))
 
     try{    
       const name = formData.get('name')
