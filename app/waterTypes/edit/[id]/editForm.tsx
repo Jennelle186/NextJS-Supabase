@@ -82,7 +82,7 @@ const EditWaterTypes: React.FC<{ id: string }> = ({ id }) => {
 
       <div className="flex justify-center w-full lg:w-3/4 xl:w-1/2">
         <form action={formAction} className="p-8 text-gray-600 w-full bg-white rounded-lg shadow-md">
-          {id}
+
           <input type="hidden" 
             value={id} 
             name="id"
