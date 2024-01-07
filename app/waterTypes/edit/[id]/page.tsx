@@ -1,25 +1,51 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import WaterTypeEditForm from "./editForm";
-import { redirect } from "next/navigation";
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import WaterTypeEditForm from './editForm'
 
-const EditWaterTypes = async ({searchParams: water_types} : {searchParams: {
-  name: string,
-  price: number,
-  id: number
-}}) => {
+interface waterType_id {
+  params: {id: string}
+}
+
+export default async function EditWatertypes(props: waterType_id) {
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
-  const {data: {session }} = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
   if(!session){
     redirect('/login')
   }
-  return <WaterTypeEditForm session={session} water_types={{ ...water_types, id: String(water_types.id)}}/>
+
+  console.log(props.params.id,"id")
+
+  return  <WaterTypeEditForm id={props.params.id}/>
+  
+  // <EditWaterStationInformation id = {props.params.id}/>
 }
+
+// const EditWaterTypes = async ({searchParams: water_types} : {searchParams: {
+//   name: string,
+//   price: number,
+//   id: number
+// }}) => {
+//   const cookieStore = cookies()
+//   const supabase = createServerComponentClient({ cookies: () => cookieStore })
+
+//   const {data: {session }} = await supabase.auth.getSession();
+
+
+
+
+//   if(!session){
+//     redirect('/login')
+//   }
+//   return <WaterTypeEditForm session={session} water_types={{ ...water_types, id: String(water_types.id)}}/>
+// }
  
-export default EditWaterTypes;
+// export default EditWaterTypes;
 
 
 // import WaterTypeEditForm from "./editForm";
